@@ -1,10 +1,20 @@
 import React from "react";
-import { actualWorkTime, timeTillDischargeDate } from "./Calculate";
-import { parse } from "date-fns";
+import {
+	actualWorkTime,
+	timeTillDischargeDate,
+	TimeFormats
+} from "./Calculate";
+import { parse, endOfWeek } from "date-fns";
 
 interface MVActualWorkProps {}
 
-interface MVActualWorldState {}
+interface MVActualWorldState extends TimeFormats {
+	days: number;
+	hours: number;
+	minutes: number;
+	seconds: number;
+	milliseconds: number;
+}
 
 export default class MVActualWork extends React.Component<
 	MVActualWorkProps,
@@ -13,16 +23,39 @@ export default class MVActualWork extends React.Component<
 	constructor(props: MVActualWorkProps) {
 		super(props);
 	}
-	render() {
-		const timer = <h1>현재까지</h1>;
-		{
-			actualWorkTime([parse(Date.now()), new Date(2019, 2, 15)], {
-				days: true,
-				seconds: true
-			}).seconds;
-		}
-		<h1>남았습니다</h1>;
 
-		return <div>{timer}</div>;
+	setTime() {
+		const time = actualWorkTime(
+			[parse(Date.now()), endOfWeek(parse(Date.now()))],
+			{
+				days: true,
+				hours: true,
+				seconds: true
+			}
+		);
+		this.setState(time);
+	}
+
+	componentWillMount() {
+		this.setTime();
+	}
+
+	componentDidMount() {
+		setInterval(() => {
+			this.setTime();
+		}, 1000);
+	}
+
+	componentWillUnmount() {
+		clearInterval();
+	}
+
+	render() {
+		return (
+			<div>
+				현재까지 실근무 {this.state.days} 일 {this.state.hours} 시간
+				{this.state.seconds} 초 남았습니다.
+			</div>
+		);
 	}
 }
