@@ -4,7 +4,7 @@ import {
 	timeTillDischargeDate,
 	TimeFormats
 } from "./Calculate";
-import { parse, endOfWeek } from "date-fns";
+import { parse, endOfWeek, startOfToday } from "date-fns";
 
 interface MVActualWorkProps {}
 
@@ -22,18 +22,19 @@ export default class MVActualWork extends React.Component<
 > {
 	constructor(props: MVActualWorkProps) {
 		super(props);
+		this.state = {
+			months: 0,
+			weeks: 0,
+			days: 0,
+			hours: 0,
+			minutes: 0,
+			seconds: 0,
+			milliseconds: 0
+		};
 	}
 
 	setTime() {
-		const time = actualWorkTime(
-			[parse(Date.now()), endOfWeek(parse(Date.now()))],
-			{
-				days: true,
-				hours: true,
-				seconds: true
-			}
-		);
-		this.setState(time);
+		// TODO: refine setting time logic for actual work
 	}
 
 	componentWillMount() {
@@ -53,8 +54,8 @@ export default class MVActualWork extends React.Component<
 	render() {
 		return (
 			<div>
-				현재까지 실근무 {this.state.days} 일 {this.state.hours} 시간
-				{this.state.seconds} 초 남았습니다.
+				현재까지 실근무 {this.state.days}일 {this.state.hours}시간{" "}
+				{this.state.minutes}분 {this.state.seconds} 초 남았습니다.
 			</div>
 		);
 	}
