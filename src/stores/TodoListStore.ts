@@ -1,9 +1,10 @@
 import {observable, computed, reaction, IObservableArray} from 'mobx';
-import ToDoModel from '../models/TodoModel'
-import * as Utils from '../utils';
+import TodoModel from '../models/TodoModel'
+import {uuid} from '../utils';
+
 
 export default class TodoStore {
-	@observable todos = <IObservableArray<ToDoModel>><unknown>[];
+	@observable todos = <IObservableArray<TodoModel>><unknown>[];
 
 	@computed get activeTodoCount() {
 		return this.todos.reduce(
@@ -35,7 +36,7 @@ export default class TodoStore {
 	}
 
 	addTodo (title: string) {
-		this.todos.push(new ToDoModel(this, Utils.uuid(), title, false));
+		this.todos.push(new TodoModel(this, uuid(), title, false));
 	}
 
 	toggleAll (checked: boolean) {
@@ -56,7 +57,7 @@ export default class TodoStore {
 
 	static fromJS(array: any) {
 		const todoStore = new TodoStore();
-		todoStore.todos = array.map((item: any) => ToDoModel.fromJS(todoStore, item));
+		todoStore.todos = array.map((item: any) => TodoModel.fromJS(todoStore, item));
 		return todoStore;
 	}
 }

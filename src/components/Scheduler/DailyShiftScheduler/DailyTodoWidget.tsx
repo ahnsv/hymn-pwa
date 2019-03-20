@@ -1,16 +1,16 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import {Router} from 'director';
-
 import TodoEntry from './DailyTodoEntry';
-import TodoOverview from './Daily';
-import TodoFooter from './todoFooter';
-import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from '../constants';
+import TodoOverview from './DailyTodoOverview';
+import TodoFooter from './DailyTodoFooter';
+import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from '../shared';
+import './css/DailyTodo.css'
 
 import DevTool from 'mobx-react-devtools';
+import TodoStore from '../../../stores/TodoListStore';
 
 interface Props {
-	todoStore: any;
+	todoStore: TodoStore;
 	viewStore: any;
 }
 
@@ -22,8 +22,8 @@ export default class TodoApp extends React.Component<Props, {}> {
 			<div>
 				<DevTool />
 				<header className="header">
-					<h1>todos</h1>
-					<TodoEntry todoStore={todoStore} />
+					<h1>Todo List</h1>
+					<TodoEntry todoListStore={todoStore} />
 				</header>
 				<TodoOverview todoStore={todoStore} viewStore={viewStore} />
 				<TodoFooter todoStore={todoStore} viewStore={viewStore} />
@@ -33,11 +33,11 @@ export default class TodoApp extends React.Component<Props, {}> {
 
 	componentDidMount() {
 		var viewStore = this.props.viewStore;
-		var router = Router({
-			'/': function() { viewStore.todoFilter = ALL_TODOS; },
-			'/active': function() { viewStore.todoFilter = ACTIVE_TODOS; },
-			'/completed': function() { viewStore.todoFilter = COMPLETED_TODOS; }
-		});
-		router.init('/');
+		// var router = Router({
+		// 	'/': function() { viewStore.todoFilter = ALL_TODOS; },
+		// 	'/active': function() { viewStore.todoFilter = ACTIVE_TODOS; },
+		// 	'/completed': function() { viewStore.todoFilter = COMPLETED_TODOS; }
+		// });
+		// router.init('/');
 	}
 }

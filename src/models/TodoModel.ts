@@ -1,12 +1,12 @@
 import {observable} from 'mobx';
-import ToDoListStore from '../stores/TodoListStore';
+import TodoListStore from '../stores/TodoListStore';
 export default class TodoModel {
-	store: ToDoListStore;
+	store: TodoListStore;
 	id: string;
 	@observable title: string;
 	@observable completed: boolean;
 
-	constructor(store: ToDoListStore, id: string, title: string, completed: boolean) {
+	constructor(store: TodoListStore, id: string, title: string, completed: boolean) {
 		this.store = store;
 		this.id = id;
 		this.title = title;
@@ -33,7 +33,7 @@ export default class TodoModel {
 		};
 	}
 
-	static fromJS(store: ToDoListStore, object: TodoModel) {
+	static fromJS(store: TodoListStore, object: TodoModel) {
 		return new TodoModel(store, object.id, object.title, object.completed);
 	}
 }

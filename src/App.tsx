@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <div className="App">
         <DailyShiftScheduler />
-        <WeeklyShiftScheduler off_duty={[off_duty]} />
+        {/* <WeeklyShiftScheduler off_duty={[off_duty]} /> */}
       </div>
     );
   }

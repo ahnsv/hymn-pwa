@@ -1,20 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {observer} from 'mobx-react';
-import TodoStore from '../stores/TodoListStore';
+import TodoListStore from '../../../stores/TodoListStore';
 
 const ENTER_KEY = 13;
-interface Props {
-	todoStore: TodoStore
+interface TodoEntryProps {
+	todoListStore: TodoListStore
 }
 
 @observer
-export default class TodoEntry extends React.Component<Props, {}> {
+export default class TodoEntry extends React.Component<TodoEntryProps, {}> {
 	render() {
 		return (<input
 			ref="newField"
 			className="new-todo"
-			placeholder="What needs to be done?"
+			placeholder="오늘 할일?"
 			onKeyDown={this.handleNewTodoKeyDown}
 			autoFocus={true}
 		/>);
@@ -31,7 +31,7 @@ export default class TodoEntry extends React.Component<Props, {}> {
 		var val = input.value.trim();
 
 		if (val) {
-			this.props.todoStore.addTodo(val);
+			this.props.todoListStore.addTodo(val);
 			input.value = '';
 		}
 	};

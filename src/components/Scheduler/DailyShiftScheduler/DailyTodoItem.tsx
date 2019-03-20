@@ -1,6 +1,5 @@
-import React from 'react'
-import {observer} from 'mobx-react';
-
+import React from 'react';
+import { observer } from 'mobx-react';
 
 const ESCAPE_KEY = 27;
 const ENTER_KEY = 13;

@@ -1,7 +1,7 @@
 /**
  * Daily Shift Timer
- * @input start_time {string}
- * @input num_of_hrs {number}
+ * @props start_time {string}
+ * @props num_of_hrs {number}
  */
 
 import React from 'react'
@@ -58,6 +58,9 @@ export default class DailyShiftTimer extends React.Component<DailyShiftTimerProp
         this.setState({ timeLeft: castToRealTime(end_time, now), percentage: (offset / total) })
     }
     render() {
+        if (this.state.percentage >= 1) return (
+            <p className="shift-done">실근무 끝!</p>
+        )
         return (
             <div>
                 <p className="shift-timer">
