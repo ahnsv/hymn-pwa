@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import MVActualWork from './components/MainViewActualWork'
-
+import DailyShiftScheduler from './components/Scheduler/DailyShiftScheduler/DailyShiftScheduler'
+import WeeklyShiftScheduler, { WeeklyOffDuty } from './components/Scheduler/WeeklyScheduler/WeeklyShiftScheduler';
 class App extends Component {
   render() {
+    const off_duty: WeeklyOffDuty = {name: '', range: ['']}
     return (
       <div className="App">
-        <MVActualWork/>
+        <DailyShiftScheduler />
+        <WeeklyShiftScheduler off_duty={[off_duty]} />
       </div>
     );
   }

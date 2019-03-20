@@ -5,7 +5,8 @@
  */
 
 import React from 'react'
-import {getTodayInfo, TimeLeft, castToRealTime} from '../shared'
+import { getTodayInfo, TimeLeft, castToRealTime } from '../shared'
+import './css/DailyShiftTimer.css'
 
 interface DailyTimeLeft extends TimeLeft {
     hours?: number
@@ -14,8 +15,7 @@ interface DailyTimeLeft extends TimeLeft {
     milliseconds?: number
 }
 
-interface DailyShiftTimerProps 
-{
+interface DailyShiftTimerProps {
     start_time: string
     num_of_hrs: number
     ranges_of_works?: string[][]
@@ -38,26 +38,33 @@ export default class DailyShiftTimer extends React.Component<DailyShiftTimerProp
             percentage: 0
         }
     }
-    componentWillMount() {}
+    componentWillMount() { 
+        this.calculateTimeLeft(this.props)
+    }
     componentDidMount() {
         setInterval(() => {
-            this.calculateTimeLeft({start_time: "08:30", num_of_hrs: 8})
+            this.calculateTimeLeft(this.props)
         }, 500)
     }
     calculateTimeLeft(props: DailyShiftTimerProps) {
         const now = new Date()
-        const [start_hr, start_min] = props.start_time.split(":").map(parseInt)
+        const [start_hr, start_min] = props.start_time.split(":").map(d => parseInt(d))
         const [num_hr, num_mins] = [Math.floor(props.num_of_hrs), props.num_of_hrs % 1]
-        const {year: tday_yr, month: tday_month, date: tday_date, day: tday_day} = getTodayInfo()
+        const { year: tday_yr, month: tday_month, date: tday_date, day: tday_day } = getTodayInfo()
+        const start_time = new Date(2019, 2, 20, start_hr, start_min, 0)
         const end_time = new Date(tday_yr, tday_month, tday_date, start_hr + num_hr, start_min + num_mins, 0)
-        this.setState({timeLeft: castToRealTime(end_time, now), percentage: (now.getTime() - new Date(new Date(tday_yr, tday_month, tday_date, start_hr, start_min, 0, 0)).getTime()) / (end_time.getTime())})
+        const offset = new Date().getTime() - start_time.getTime()
+        const total = end_time.getTime() - start_time.getTime()
+        this.setState({ timeLeft: castToRealTime(end_time, now), percentage: (offset / total) })
     }
     render() {
         return (
             <div>
-            {this.state.timeLeft.hours}: {this.state.timeLeft.minutes}
-            {this.state.percentage}%
+                <p className="shift-timer">
+                    {this.state.timeLeft.hours}: {this.state.timeLeft.minutes} <br />
+                    {(this.state.percentage * 100).toFixed(2)}%
+                </p>
             </div>
         )
-    } 
+    }
 }
