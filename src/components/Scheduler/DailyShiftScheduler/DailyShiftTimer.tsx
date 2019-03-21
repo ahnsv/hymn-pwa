@@ -65,10 +65,10 @@ export default class DailyShiftTimer extends React.Component<DailyShiftTimerProp
         return (
             <div>
                 <p className="shift-timer">
-                    <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={700} transitionLeaveTimeout={700}>
+                    {/* <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={700} transitionLeaveTimeout={700}> */}
                         {this.state.timeLeft.hours}: {this.state.timeLeft.minutes} <br />
                         {(this.state.percentage * 100).toFixed(2)}%
-                    </ReactCSSTransitionGroup>
+                    {/* </ReactCSSTransitionGroup> */}
                 </p>
             </div>
         )

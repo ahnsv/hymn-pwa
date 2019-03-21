@@ -20,9 +20,9 @@ export default class TodoApp extends React.Component<Props, {}> {
 		const {todoStore, viewStore} = this.props;
 		return (
 			<div>
-				<DevTool />
+				{/* <DevTool /> */}
 				<header className="header">
-					<h1>Todo List</h1>
+					{/* <h1>Todo List</h1> */}
 					<TodoEntry todoListStore={todoStore} />
 				</header>
 				<TodoOverview todoStore={todoStore} viewStore={viewStore} />

@@ -120,7 +120,7 @@
 	margin: 0;
 	padding: 0;
     list-style: none;
-    max-height: 200px;
+    max-height: 15vh;
     overflow-y: scroll;
 }
 
