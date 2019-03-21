@@ -6,6 +6,7 @@
 
 import React from 'react'
 import { getTodayInfo, TimeLeft, castToRealTime } from '../shared'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import './css/DailyShiftTimer.css'
 
 interface DailyTimeLeft extends TimeLeft {
@@ -38,7 +39,7 @@ export default class DailyShiftTimer extends React.Component<DailyShiftTimerProp
             percentage: 0
         }
     }
-    componentWillMount() { 
+    componentWillMount() {
         this.calculateTimeLeft(this.props)
     }
     componentDidMount() {
@@ -64,8 +65,10 @@ export default class DailyShiftTimer extends React.Component<DailyShiftTimerProp
         return (
             <div>
                 <p className="shift-timer">
-                    {this.state.timeLeft.hours}: {this.state.timeLeft.minutes} <br />
-                    {(this.state.percentage * 100).toFixed(2)}%
+                    <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={700} transitionLeaveTimeout={700}>
+                        {this.state.timeLeft.hours}: {this.state.timeLeft.minutes} <br />
+                        {(this.state.percentage * 100).toFixed(2)}%
+                    </ReactCSSTransitionGroup>
                 </p>
             </div>
         )
