@@ -3,7 +3,7 @@ import './App.css';
 import DailyShiftScheduler from './components/Scheduler/DailyShiftScheduler/DailyShiftScheduler'
 import WeeklyShiftScheduler, { WeeklyOffDuty } from './components/Scheduler/WeeklyScheduler/WeeklyShiftScheduler';
 import { Route, Switch } from 'react-router-dom';
-import SignInMain from './components/SignIn/SignInMain';
+import {SignIn} from './components/SignIn/index';
 import { firebase, withAuthentication } from "./firebase";
 
 class AppComponent extends Component {
@@ -26,7 +26,7 @@ class AppComponent extends Component {
       <div className="App">
         <Switch>
           <Route exact={true} path="/" component={DailyShiftScheduler} />
-          <Route path="/signin" component={SignInMain} />
+          <Route path="/signin" component={SignIn} />
         </Switch>
       </div>
     );
