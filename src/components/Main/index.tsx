@@ -1,6 +1,6 @@
 import React from 'react'
-import DailyShift from './DailyShiftScheduler/DailyShiftScheduler'
-import MilitaryServ from './MilitaryShiftScheduler/MilitaryShiftTimer'
+import DailyShift from './DailyMain/index'
+import MilitaryServ from './MilitaryServiceMain/MilitaryShiftTimer'
 
 const Scheduler = () => (
     <div>

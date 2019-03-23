@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Scheduler from './components/Scheduler/index'
-import WeeklyShiftScheduler, { WeeklyOffDuty } from './components/Scheduler/WeeklyScheduler/WeeklyShiftScheduler';
+import Scheduler from './components/Main/index'
 import { Route, Switch } from 'react-router-dom';
 import {SignIn} from './components/SignIn/index';
 import { firebase, withAuthentication } from "./firebase";
@@ -21,7 +20,7 @@ class AppComponent extends Component {
     });
   }
   render() {
-    const off_duty: WeeklyOffDuty = { name: '', range: [''] }
+    const off_duty = { name: '', range: [''] }
     return (
       <div className="App">
         <Switch>
