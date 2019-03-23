@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import DailyShiftScheduler from './components/Scheduler/DailyShiftScheduler/DailyShiftScheduler'
+import Scheduler from './components/Scheduler/index'
 import WeeklyShiftScheduler, { WeeklyOffDuty } from './components/Scheduler/WeeklyScheduler/WeeklyShiftScheduler';
 import { Route, Switch } from 'react-router-dom';
 import {SignIn} from './components/SignIn/index';
@@ -25,7 +25,7 @@ class AppComponent extends Component {
     return (
       <div className="App">
         <Switch>
-          <Route exact={true} path="/" component={DailyShiftScheduler} />
+          <Route exact={true} path="/" component={Scheduler} />
           <Route path="/signin" component={SignIn} />
         </Switch>
       </div>
