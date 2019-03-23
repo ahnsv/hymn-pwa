@@ -141,3 +141,14 @@ export function unregister() {
     });
   }
 }
+
+export function addToCache(req: Request, res: Response) {
+  if (res.ok) {
+    const copy = res.clone()
+    // TODO: get cache name from sw
+    caches.open('CACHE_NAME').then((cache) => {
+      cache.put(req, copy)
+    })
+    return res
+  }
+}
