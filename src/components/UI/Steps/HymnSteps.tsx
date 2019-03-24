@@ -4,12 +4,12 @@ interface StepsState {
     currentStep: number
     stepsCount: number
 }
-export default class Steps extends React.Component<{}, StepsState> {
+export default class Steps extends React.Component<{ children: React.ReactNode }, StepsState> {
     constructor(props: { children: React.ReactNode }) {
         super(props)
         this.state = {
             currentStep: 0,
-            stepsCount: 0
+            stepsCount: (this.props.children as any[]).length - 1
         }
     }
     prev = () => {

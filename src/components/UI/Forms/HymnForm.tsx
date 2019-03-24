@@ -1,11 +1,9 @@
 import React from 'react'
 
 interface HymnFormProps {}
-interface HymnFormState<T> {
-    formData: T
-}
+interface HymnFormState {}
 
-export default class HymnForm<T> extends React.Component<HymnFormProps, HymnFormState<T>> {
+export default class HymnForm extends React.Component<HymnFormProps, HymnFormState> {
     handleSubmit(e: Event) {
         e.preventDefault()
         console.log(e)

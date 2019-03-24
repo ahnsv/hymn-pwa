@@ -3,13 +3,13 @@ import { Next, Prev, Submit } from './HymnStepButtons'
 
 interface StepProps {
     isActive: boolean,
-    displayPrevious: boolean,
-    displayNext: boolean,
-    displaySubmit: boolean,
-    prev: () => {},
-    next: () => {},
+    displayPrevious?: boolean,
+    displayNext?: boolean,
+    displaySubmit?: boolean,
+    prev?: () => {},
+    next?: () => {},
     children?: React.ReactNode
-    component: React.ComponentClass
+    component?: React.ComponentClass
 }
 
 export default class Step extends React.Component<StepProps, {}> {
@@ -22,9 +22,9 @@ export default class Step extends React.Component<StepProps, {}> {
         return (
             <>
                 {component ? React.createElement(component) : children}
-                <Prev isActive={displayPrevious} goToPrevStep={prev} />
-                <Next isActive={displayNext} goToNextStep={next} />
-                <Submit isActive={displaySubmit} />
+                <Prev isActive={displayPrevious as boolean} goToPrevStep={prev as () => {}} />
+                <Next isActive={displayNext as boolean} goToNextStep={next as () => {}} />
+                <Submit isActive={displaySubmit as boolean} />
             </>
         )
     }
