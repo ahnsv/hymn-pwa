@@ -1,5 +1,14 @@
+.timer-block {
+    height: 50vh;
+}
 .shift-timer {
-    font-size: 5em;
+    font-size: 3em;
+    font-weight: bolder;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
 }
 
 .example-enter {
@@ -22,4 +31,12 @@ width: 100px;
 opacity: 0.01;
 width: 0px;
 transition: 700ms;
+}
+
+.timer-progress {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: inherit;
+    width: 100%;
 }

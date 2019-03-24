@@ -27,16 +27,17 @@ export interface AnonymousUserData extends UserData {
 const SetUpBasicInfoForm = () => {
     const [userData, setUserData] = useState<UserData>({})
     return (
-        <HymnSteps>
-            <HymnStep isActive={true}>
-                <h1>Hello</h1>
-            </HymnStep>
-            <HymnStep isActive={false}>
-                <HymnForm>
-                    <h1>Form Hi</h1>
-                </HymnForm>
-            </HymnStep>
-        </HymnSteps>
+        // <HymnSteps>
+        //     <HymnStep isActive={true}>
+        //         <h1>Hello</h1>
+        //     </HymnStep>
+        //     <HymnStep isActive={false}>
+        //         <HymnForm>
+        //             <h1>Form Hi</h1>
+        //         </HymnForm>
+        //     </HymnStep>
+        // </HymnSteps>
+        <div>Temp</div>
     )
 }
 

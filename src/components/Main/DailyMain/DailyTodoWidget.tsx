@@ -26,7 +26,6 @@ export default class TodoApp extends React.Component<Props, {}> {
 					<TodoEntry todoListStore={todoStore} />
 				</header>
 				<TodoOverview todoStore={todoStore} viewStore={viewStore} />
-				<TodoFooter todoStore={todoStore} viewStore={viewStore} />
 			</div>
 		);
 	}

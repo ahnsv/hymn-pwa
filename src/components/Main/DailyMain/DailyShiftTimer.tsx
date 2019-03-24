@@ -6,8 +6,9 @@
 
 import React from 'react'
 import { getTodayInfo, TimeLeft, castToRealTime } from '../shared'
-import {differenceInMilliseconds} from 'date-fns'
+import { differenceInMilliseconds } from 'date-fns'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { Circle } from 'rc-progress'
 import './css/DailyShiftTimer.css'
 
 interface DailyTimeLeft extends TimeLeft {
@@ -45,6 +46,10 @@ export default class DailyShiftTimer extends React.Component<DailyShiftTimerProp
     }
     componentDidMount() {
         setInterval(() => {
+            if (this.state.percentage > 1) {
+                clearInterval()
+                return;
+            }
             this.calculateTimeLeft(this.props)
         }, 500)
     }
@@ -60,17 +65,20 @@ export default class DailyShiftTimer extends React.Component<DailyShiftTimerProp
         this.setState({ timeLeft: castToRealTime(end_time, now), percentage: (offset / total) })
     }
     render() {
-        if (this.state.percentage >= 1) return (
-            <p className="shift-done">실근무 끝!</p>
+        // TODO: Implement Carousel for this part
+        const todayOver = (
+            <h1 className="shift-done">실근무 끝!</h1>
         )
+        const content = (<p className="shift-timer">
+            남은 근무 <br />
+            {this.state.timeLeft.hours}시간 {this.state.timeLeft.minutes}분<br />
+        </p>)
         return (
             <div>
-                <p className="shift-timer">
-                    {/* <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={700} transitionLeaveTimeout={700}> */}
-                        {this.state.timeLeft.hours}: {this.state.timeLeft.minutes} <br />
-                        {(this.state.percentage * 100).toFixed(2)}%
-                    {/* </ReactCSSTransitionGroup> */}
-                </p>
+                <div className="timer-block">
+                    { (this.state.percentage > 1) ? todayOver : content}
+                    <Circle className="timer-progress" percent={this.state.percentage * 100} strokeWidth="4" strokeColor="#2cae00" />
+                </div>
             </div>
         )
     }
