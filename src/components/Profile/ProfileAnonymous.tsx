@@ -40,9 +40,15 @@ const BasicInfoSteps = () => {
 	);
 };
 
+const BasicForm = () => (
+	<HymnForm>
+		Hi
+	</HymnForm>
+)
+
 const BasicInfoSetup = () => {
 	const [userData, setUserData] = useState<UserData>({});
 	return <div className="info-setup">{BasicInfoSteps()}</div>;
 };
 
-export { BasicInfoSetup };
+export { BasicInfoSetup, BasicForm };

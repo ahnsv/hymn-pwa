@@ -3,7 +3,7 @@ import "./App.css";
 import Scheduler from "./components/Main/index";
 import { Route, Switch } from "react-router-dom";
 import { SignIn } from "./components/SignIn/index";
-import { BasicInfoSetup as ProfileAnonymous } from "./components/Profile/ProfileAnonymous";
+import { BasicInfoSetup as ProfileAnonymous, BasicForm } from "./components/Profile/ProfileAnonymous";
 import { firebase, withAuthentication } from "./firebase";
 
 class AppComponent extends Component {
@@ -28,6 +28,7 @@ class AppComponent extends Component {
 					<Route exact={true} path="/" component={Scheduler} />
 					<Route path="/signin" component={SignIn} />
 					<Route path="/setup" component={ProfileAnonymous} />
+					<Route path="/form" component={BasicForm} />
 				</Switch>
 			</div>
 		);
