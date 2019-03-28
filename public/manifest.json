@@ -1,9 +1,10 @@
 {
-	"name": "장병들을 위한 시간표, 커뮤니티 서비스 Hymn",
+	"name": "Hymn",
 	"short_name": "Hymn",
-	"theme_color": "#076088",
-	"background_color": "#ffffff",
+	"theme_color": "#ffefce",
+	"background_color": "#066088",
 	"display": "fullscreen",
+	"Scope": ".",
 	"start_url": ".",
 	"icons": [
 		{

@@ -1,0 +1,17 @@
+.step-nav {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin-top: auto;
+	height: 50px;
+	margin-bottom: 10px;
+}
+
+.step-nav > div:last-child {
+	margin-left: auto;
+}
+
+.step-nav i {
+	font-size: 3em;
+}

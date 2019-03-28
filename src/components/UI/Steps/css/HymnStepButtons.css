@@ -1,0 +1,8 @@
+.submit-btn {
+	height: 50px;
+	display: flex;
+	align-items: center;
+	border-radius: 10px;
+	box-shadow: 0 0 3px #3f51b5;
+	padding: 0 10px;
+}
