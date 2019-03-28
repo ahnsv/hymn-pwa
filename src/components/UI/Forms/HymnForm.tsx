@@ -52,11 +52,9 @@ export default class HymnForm extends React.Component<HymnFormProps, HymnFormSta
 
 	render() {
 		return (
-			<form onSubmit={this.handleSubmit} noValidate={true}>
 				<div>
-					{ this.props.render }
+					Hi
 				</div>
-			</form>
 		);
 	}
 }

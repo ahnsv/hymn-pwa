@@ -7,7 +7,6 @@
 import React from 'react'
 import { getTodayInfo, TimeLeft, castToRealTime } from '../shared'
 import { differenceInMilliseconds } from 'date-fns'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Circle } from 'rc-progress'
 import './css/DailyShiftTimer.css'
 
@@ -76,7 +75,7 @@ export default class DailyShiftTimer extends React.Component<DailyShiftTimerProp
         return (
             <div>
                 <div className="timer-block">
-                    { (this.state.percentage > 1) ? todayOver : content}
+                    {(this.state.percentage > 1) ? todayOver : content}
                     <Circle className="timer-progress" percent={this.state.percentage * 100} strokeWidth="4" strokeColor="#2cae00" />
                 </div>
             </div>

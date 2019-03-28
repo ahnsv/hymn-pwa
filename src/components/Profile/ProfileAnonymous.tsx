@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { HymnForm, HymnInput } from "../UI/Forms";
 import { HymnSteps, HymnStep } from "../UI/Steps";
+import { Transition } from "react-transition-group";
 
 export interface UserData {
 	entrance_date?: Date;
@@ -40,11 +41,16 @@ const BasicInfoSteps = () => {
 	);
 };
 
-const BasicForm = () => (
-	<HymnForm>
-		Hi
-	</HymnForm>
-)
+const BasicForm = () => {
+	const [inProp, setInProp] = useState(false)
+	return (
+		<Transition in={inProp} timeout={500}>
+			<HymnForm>
+				Hi
+			</HymnForm>
+		</Transition>
+	)
+}
 
 const BasicInfoSetup = () => {
 	const [userData, setUserData] = useState<UserData>({});
