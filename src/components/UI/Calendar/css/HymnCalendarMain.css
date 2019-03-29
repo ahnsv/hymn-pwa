@@ -1,0 +1,23 @@
+.hymn-month {
+    font-size: 5em;
+    margin-bottom: 10vh;
+}
+
+.hymn-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 3vw;
+    margin: 5vh 0;
+}
+
+.hymn-dates {
+    display: grid;
+    grid-template: repeat(7, auto) / repeat(7, auto);
+    grid-gap: 3vw;
+    opacity: 0.8;
+}
+
+.hymn-dates .current {
+    font-weight: bold;
+    opacity: 1;
+}

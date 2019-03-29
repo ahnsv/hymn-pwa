@@ -4,6 +4,7 @@ import Scheduler from "./components/Main/index";
 import { Route, Switch } from "react-router-dom";
 import { SignIn } from "./components/SignIn/index";
 import { BasicInfoSetup as ProfileAnonymous, BasicForm } from "./components/Profile/ProfileAnonymous";
+import { VacationScheduler } from './components/Scheduler/VacationScheduler'
 import { firebase, withAuthentication } from "./firebase";
 
 class AppComponent extends Component {
@@ -29,6 +30,7 @@ class AppComponent extends Component {
 					<Route path="/signin" component={SignIn} />
 					<Route path="/setup" component={ProfileAnonymous} />
 					<Route path="/form" component={BasicForm} />
+					<Route path="/calendar" component={VacationScheduler} />
 				</Switch>
 			</div>
 		);
