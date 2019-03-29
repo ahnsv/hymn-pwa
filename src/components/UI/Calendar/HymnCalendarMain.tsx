@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import { getMonth, getYear, startOfMonth, endOfMonth, eachDay, getDate, getDay, subDays, addDays, addMonths } from 'date-fns'
+import { getMonth, getYear, startOfMonth, endOfMonth, eachDay, getDate, getDay, subDays, addDays, addMonths, subMonths, startOfWeek, endOfWeek } from 'date-fns'
 import './css/HymnCalendarMain.css'
 
 interface CalendarProps {
@@ -41,9 +41,16 @@ export default class CalenderMain extends React.Component<CalendarProps, Calenda
         })
     }
 
-    handleNext(e: Event) {
+    handleNext = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         this.setState({
             current: addMonths(this.state.current, 1)
+        })
+        this.handleStateChange()
+    }
+
+    handlePrev = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        this.setState({
+            current: subMonths(this.state.current, 1)
         })
         this.handleStateChange()
     }
@@ -60,8 +67,8 @@ export default class CalenderMain extends React.Component<CalendarProps, Calenda
             </div>
         ))
         const restOfDays = {
-            head: [subDays(this.state.min_date, firstDayIdx), subDays(this.state.min_date, 1)],
-            tail: [addDays(this.state.max_date, 1), addDays(this.state.max_date, 6 - lastDayIdx)]
+            head: [startOfWeek(subDays(this.state.min_date, 1)), subDays(this.state.min_date, 1)],
+            tail: [addDays(this.state.max_date, 1), endOfWeek(addDays(this.state.max_date, 1))]
         }
         const head = eachDay(restOfDays.head[0], restOfDays.head[1]).map((d, i) =>
             <div key={i}>{getDate(d)}</div>
@@ -86,8 +93,14 @@ export default class CalenderMain extends React.Component<CalendarProps, Calenda
     render() {
         return (
             <div className="hymn-calendar-monthly">
-                <div className="hymn-month-nav-next" onClick={() => this.handleNext}>
+                <div className="hymn-month-nav-next" onClick={this.handleNext}>
                     <i className="fas fa-angle-right" />
+                </div>
+                <div className="hymn-month-nav-prev" onClick={this.handlePrev}>
+                    <i className="fas fa-angle-left" />
+                </div>
+                <div className="hymn-year">
+                    {this.state.year}
                 </div>
                 <div className="hymn-month">
                     {this.state.month + 1}
