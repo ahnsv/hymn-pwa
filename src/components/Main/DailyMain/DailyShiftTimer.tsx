@@ -65,6 +65,9 @@ export default class DailyShiftTimer extends React.Component<DailyShiftTimerProp
     }
     render() {
         // TODO: Implement Carousel for this part
+        const beforeStart = (
+            <h1></h1>
+        )
         const todayOver = (
             <h1 className="shift-done">실근무 끝!</h1>
         )

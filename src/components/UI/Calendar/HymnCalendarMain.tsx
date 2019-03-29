@@ -3,7 +3,9 @@
  */
 
 import React from 'react'
-import { getMonth, getYear, startOfMonth, endOfMonth, eachDay, getDate, getDay, subDays, addDays, addMonths, subMonths, startOfWeek, endOfWeek } from 'date-fns'
+import { getMonth, getYear, startOfMonth, endOfMonth, eachDay, getDate, subDays, addDays, addMonths, subMonths, startOfWeek, endOfWeek } from 'date-fns'
+import HymnCalendarDay from './HymnCalendarDay'
+import { CSSTransition } from 'react-transition-group'
 import './css/HymnCalendarMain.css'
 
 interface CalendarProps {
@@ -41,14 +43,14 @@ export default class CalenderMain extends React.Component<CalendarProps, Calenda
         })
     }
 
-    handleNext = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    handleNext = () => {
         this.setState({
             current: addMonths(this.state.current, 1)
         })
         this.handleStateChange()
     }
 
-    handlePrev = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    handlePrev = () => {
         this.setState({
             current: subMonths(this.state.current, 1)
         })
@@ -60,21 +62,18 @@ export default class CalenderMain extends React.Component<CalendarProps, Calenda
         const renderedDays = days.map((d, i) => (
             <div key={i}>{d}</div>
         ))
-        const [firstDayIdx, lastDayIdx] = [getDay(this.state.min_date), getDay(this.state.max_date)]
         const currentMonthDates = eachDay(this.state.min_date, this.state.max_date).map((d, i) => (
-            <div key={i} className="current">
-                {getDate(d)}
-            </div>
+            <HymnCalendarDay date={getDate(d)} month={this.state.month} year={this.state.year} key={i}>{getDate(d)}</HymnCalendarDay>
         ))
         const restOfDays = {
             head: [startOfWeek(subDays(this.state.min_date, 1)), subDays(this.state.min_date, 1)],
             tail: [addDays(this.state.max_date, 1), endOfWeek(addDays(this.state.max_date, 1))]
         }
         const head = eachDay(restOfDays.head[0], restOfDays.head[1]).map((d, i) =>
-            <div key={i}>{getDate(d)}</div>
+            <HymnCalendarDay date={getDate(d)} month={this.state.month} year={this.state.year} key={i}>{getDate(d)}</HymnCalendarDay>
         )
         const tail = eachDay(restOfDays.tail[0], restOfDays.tail[1]).map((d, i) =>
-            <div key={i}>{getDate(d)}</div>
+            <HymnCalendarDay date={getDate(d)} month={this.state.month} year={this.state.year} key={i}>{getDate(d)}</HymnCalendarDay>
         )
 
         return (
@@ -99,13 +98,17 @@ export default class CalenderMain extends React.Component<CalendarProps, Calenda
                 <div className="hymn-month-nav-prev" onClick={this.handlePrev}>
                     <i className="fas fa-angle-left" />
                 </div>
-                <div className="hymn-year">
-                    {this.state.year}
-                </div>
-                <div className="hymn-month">
-                    {this.state.month + 1}
-                </div>
-                {this.renderDaysAndDates()}
+                <CSSTransition in={false} timeout={200} classNames="hymn-calendar-transition">
+                    <div>
+                        <div className="hymn-year">
+                            {this.state.year}
+                        </div>
+                        <div className="hymn-month">
+                            {this.state.month + 1}
+                        </div>
+                        {this.renderDaysAndDates()}
+                    </div>
+                </CSSTransition>
             </div>
         )
     }

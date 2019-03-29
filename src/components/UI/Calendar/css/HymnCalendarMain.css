@@ -1,3 +1,18 @@
+.hymn-calendar-transition-enter {
+    opacity: 0;
+}
+.hymn-calendar-transition-enter-active {
+    opacity: 1;
+    transition: all .5s ease-in-out;
+}
+.hymn-calendar-transition-exit {
+    opacity: 1;
+}
+.hymn-calendar-transition-exit-active {
+    opacity: 0;
+    transition: all .5s ease-in-out;
+}
+
 .hymn-year {
     font-size: 2em;
 }
@@ -11,6 +26,7 @@
     grid-template-columns: repeat(7, 1fr);
     grid-gap: 3vw;
     margin: 5vh 0;
+    font-weight: bolder;
 }
 
 .hymn-dates {
@@ -33,6 +49,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    font-size: 2em;
 }
 
 .hymn-month-nav-prev {
