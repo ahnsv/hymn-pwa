@@ -48,6 +48,9 @@
 		"@types/react-transition-group": "^2.0.16",
 		"jest": "^23.6.0",
 		"ts-jest": "^24.0.0",
-		"ts-node": "^8.0.3"
+		"ts-node": "^8.0.3",
+		"tslint": "^5.14.0",
+		"tslint-config-prettier": "^1.18.0",
+		"tslint-react": "^4.0.0"
 	}
 }
