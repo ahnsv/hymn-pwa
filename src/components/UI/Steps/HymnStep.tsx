@@ -31,8 +31,7 @@ export default class Step extends React.Component<StepProps, {}> {
 	} = this.props;
     return (
       <>
-        {component ? React.createElement(component) : children}
-        
+		{component ? React.createElement(component) : children}
           <div className="step-nav">
             <Prev
               isActive={displayPrevious as boolean}

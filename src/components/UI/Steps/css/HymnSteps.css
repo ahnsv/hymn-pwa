@@ -1,5 +1,18 @@
 .hymn-steps {
-    height: inherit;
-    display: flex;
-    flex-direction: column;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+}
+.step {
+  -webkit-overflow-scrolling: touch;
+  transition: transform 1s ease-in-out;
+}
+.step-enter {
+  transform: translate(-100%, 0);
+}
+.step-enter-active {
+  transform: translate(0, 0);
+}
+.step-exit {
+  transform: translate(-100%, 0);
 }

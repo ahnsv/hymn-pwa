@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { HymnForm, HymnInput } from "../UI/Forms";
 import { HymnSteps, HymnStep } from "../UI/Steps";
 import { Transition } from "react-transition-group";
-import Swipe from "react-swipe";
 
 export interface UserData {
   entrance_date?: Date;
@@ -28,19 +27,17 @@ export interface AnonymousUserData extends UserData {
  */
 const BasicInfoSteps = () => {
   return (
-    <Swipe>
-      <HymnSteps>
-        <HymnStep>
-          <h1>Hello</h1>
-        </HymnStep>
-        <HymnStep>
-          <h2>hi</h2>
-        </HymnStep>
-        <HymnStep>
-          <h3>ollah</h3>
-        </HymnStep>
-      </HymnSteps>
-    </Swipe>
+    <HymnSteps>
+      <HymnStep>
+        <h1>Hello</h1>
+      </HymnStep>
+      <HymnStep>
+        <h2>hi</h2>
+      </HymnStep>
+      <HymnStep>
+        <h3>ollah</h3>
+      </HymnStep>
+    </HymnSteps>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from "react";
-import Swipe from "react-swipe";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import "./css/HymnSteps.css";
 
 interface StepsProps {
@@ -48,7 +48,12 @@ export default class Steps extends React.Component<StepsProps, StepsState> {
     );
     return (
       <div className="hymn-steps">
-        {stepChildren}
+          <CSSTransition
+            classNames="step"
+            timeout={{ enter: 1000, exit: 1000 }}
+          >
+            <div>{stepChildren}</div>
+          </CSSTransition>
       </div>
     );
   }
