@@ -69,15 +69,17 @@ export class Swiper {
 					return (diffY < 0) ? 2 : 3
 				}
 				else {
-					return 0
+					return undefined
 				}
 			}
 			else {
-				return 0
+				return undefined
 			}
 		}
-		console.log(angle[direction(distX, distY)])
-		return angle[direction(distX, distY)]
+		if (direction(distX, distY) === undefined) {
+			return 'Non detected'
+		}
+		return angle[direction(distX, distY) as number]
 	}
     /**
      * Add Touch Start Event Listener 
