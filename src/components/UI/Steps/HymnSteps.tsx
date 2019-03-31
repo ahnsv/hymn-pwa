@@ -1,9 +1,10 @@
 import React, { ReactElement, ReactNode } from "react";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import Slider from "react-slick";
 import "./css/HymnSteps.css";
 
 interface StepsProps {
   children: ReactNode;
+  swipeable?: boolean
 }
 interface StepsState {
   currentStep: number;
@@ -13,47 +14,49 @@ export default class Steps extends React.Component<StepsProps, StepsState> {
   constructor(props: StepsProps) {
     super(props);
     this.state = {
-      currentStep: 0,
-      stepsCount: (this.props.children as any[]).length - 1
+      currentStep: 1,
+      stepsCount: (this.props.children as any[]).length
     };
   }
   prev = () => {
+    if (this.state.currentStep === 1) return;
     this.setState({
       currentStep: this.state.currentStep - 1
     });
   };
 
   next = () => {
+    if (this.state.currentStep === this.state.stepsCount) return;
     this.setState({
       currentStep: this.state.currentStep + 1
     });
   };
 
+  swipeHandler = (e: string) => {
+    switch (e) {
+      case "left":
+        this.next();
+        break;
+      case "right":
+        this.prev();
+    }
+  };
+
   render() {
-    const stepChildren = React.Children.map(
-      this.props.children,
-      (child, index) => {
-        const { currentStep, stepsCount } = this.state;
-        if (React.isValidElement(child)) {
-          return React.cloneElement(child as React.ReactElement<any>, {
-            isActive: index === currentStep,
-            displayPrevious: currentStep > 0,
-            displayNext: currentStep < stepsCount,
-            displaySubmit: currentStep === stepsCount,
-            prev: () => this.prev(),
-            next: () => this.next()
-          });
-        }
-      }
-    );
+
+    const sliderSettings = {
+      arrows: false,
+      dots: true,
+      slidesToScroll: 1,
+      slidesToShow: 1,
+      speed: 500,
+      onSwipe: this.swipeHandler,
+      infinite: false,
+      swipe: (this.props.swipeable === undefined) ? true : this.props.swipeable
+    };
     return (
       <div className="hymn-steps">
-          <CSSTransition
-            classNames="step"
-            timeout={{ enter: 1000, exit: 1000 }}
-          >
-            <div>{stepChildren}</div>
-          </CSSTransition>
+        <Slider {...sliderSettings}>{this.props.children}</Slider>
       </div>
     );
   }
