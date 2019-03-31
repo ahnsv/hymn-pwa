@@ -29,8 +29,12 @@ export interface AnonymousUserData extends UserData {
 const BasicInfoSteps = () => {
   return (
     <HymnSteps>
-      <Scheduler />
-      <Scheduler />
+      <h1>Love</h1>
+      <h1>Love</h1>
+      <h1>Love</h1>
+      <h1>Love</h1>
+      <h1>Love</h1>
+      <h1>Love</h1>
     </HymnSteps>
   );
 };

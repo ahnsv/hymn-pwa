@@ -4,12 +4,37 @@ import "./css/HymnSteps.css";
 
 interface StepsProps {
   children: ReactNode;
-  swipeable?: boolean
+  swipeable?: boolean;
 }
 interface StepsState {
   currentStep: number;
   stepsCount: number;
 }
+interface ArrowProps {
+  className?: string | undefined;
+  isActive?: boolean;
+  style?: React.CSSProperties;
+  onClick: () => void;
+}
+function ArrowWithValidation(props: ArrowProps) {
+  if (props.isActive === false) {
+    return (
+      <div
+        className={props.className}
+        style={{ ...props.style, display: "none" }}
+        onClick={props.onClick}
+      />
+    );
+  }
+  return (
+    <div
+      className={props.className}
+      style={{...props.style, display: "block", background: "black"}}
+      onClick={props.onClick}
+    />
+  );
+}
+
 export default class Steps extends React.Component<StepsProps, StepsState> {
   constructor(props: StepsProps) {
     super(props);
@@ -19,14 +44,18 @@ export default class Steps extends React.Component<StepsProps, StepsState> {
     };
   }
   prev = () => {
-    if (this.state.currentStep === 1) return;
+    if (this.state.currentStep === 1) {
+      return;
+    }
     this.setState({
       currentStep: this.state.currentStep - 1
     });
   };
 
   next = () => {
-    if (this.state.currentStep === this.state.stepsCount) return;
+    if (this.state.currentStep === this.state.stepsCount) {
+      return;
+    }
     this.setState({
       currentStep: this.state.currentStep + 1
     });
@@ -43,16 +72,16 @@ export default class Steps extends React.Component<StepsProps, StepsState> {
   };
 
   render() {
-
     const sliderSettings = {
-      arrows: false,
       dots: true,
       slidesToScroll: 1,
       slidesToShow: 1,
       speed: 500,
       onSwipe: this.swipeHandler,
       infinite: false,
-      swipe: (this.props.swipeable === undefined) ? true : this.props.swipeable
+      swipe: this.props.swipeable === undefined ? true : this.props.swipeable,
+      prevArrow: <ArrowWithValidation onClick={this.prev} />,
+      nextArrow: <ArrowWithValidation onClick={this.next} isActive={true}/>
     };
     return (
       <div className="hymn-steps">
