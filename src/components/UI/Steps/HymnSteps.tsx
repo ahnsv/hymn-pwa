@@ -14,7 +14,7 @@ interface ArrowProps {
   className?: string | undefined;
   isActive?: boolean;
   style?: React.CSSProperties;
-  onClick: () => void;
+  onClick?: () => void;
 }
 function ArrowWithValidation(props: ArrowProps) {
   if (props.isActive === false) {
@@ -29,7 +29,7 @@ function ArrowWithValidation(props: ArrowProps) {
   return (
     <div
       className={props.className}
-      style={{...props.style, display: "block", background: "black"}}
+      style={{ ...props.style, display: "block", background: "black" }}
       onClick={props.onClick}
     />
   );
@@ -80,8 +80,9 @@ export default class Steps extends React.Component<StepsProps, StepsState> {
       onSwipe: this.swipeHandler,
       infinite: false,
       swipe: this.props.swipeable === undefined ? true : this.props.swipeable,
-      prevArrow: <ArrowWithValidation onClick={this.prev} />,
-      nextArrow: <ArrowWithValidation onClick={this.next} isActive={true}/>
+      prevArrow: <ArrowWithValidation isActive={false} />,
+      nextArrow: <ArrowWithValidation isActive={true} />,
+      beforeChange: (current: number, next: number) => this.setState({ currentStep: next + 1 })
     };
     return (
       <div className="hymn-steps">
