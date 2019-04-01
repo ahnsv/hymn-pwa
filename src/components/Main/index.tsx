@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import DailyShift from "./DailyMain/index";
 import MilitaryServ from "./MilitaryServiceMain/MilitaryShiftTimer";
+import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import { HymnCarpet, HymnCarpetItem, HymnCarpetRow } from "../UI/Carpet";
+import CalenderMain from "../UI/Calendar/HymnCalendarMain";
+import './index.css'
 
 const Scheduler = () => (
   <div>
@@ -9,49 +12,29 @@ const Scheduler = () => (
     <MilitaryServ mil="Airforce" entrance={new Date(2017, 9, 16)} />
   </div>
 );
-export const Carpets = () => (
-  <div>
-    <HymnCarpet>
-      <HymnCarpetItem>
-        <h1>H1</h1>
-      </HymnCarpetItem>
-      <HymnCarpetItem>
-        <h1>H2</h1>
-      </HymnCarpetItem>
-      <HymnCarpetItem>
-        <h1>H3</h1>
-      </HymnCarpetItem>
-      <HymnCarpetRow>
-        <HymnCarpetItem>
-          <h1>H4</h1>
-        </HymnCarpetItem>
-        <HymnCarpetItem>
-          <h1>H5</h1>
-        </HymnCarpetItem>
-        <HymnCarpetItem>
-          <h1>H5</h1>
-        </HymnCarpetItem>
-        <HymnCarpetItem>
-          <h1>H5</h1>
-        </HymnCarpetItem>
-        <HymnCarpetItem>
-          <h1>H5</h1>
-        </HymnCarpetItem>
-        <HymnCarpetItem>
-          <h1>H5</h1>
-        </HymnCarpetItem>
-        <HymnCarpetItem>
-          <h1>H5</h1>
-        </HymnCarpetItem>
-        <HymnCarpetItem>
-          <h1>H5</h1>
-        </HymnCarpetItem>
-        <HymnCarpetItem>
-          <h1>H5</h1>
-        </HymnCarpetItem>
-      </HymnCarpetRow>
-    </HymnCarpet>
-  </div>
-);
+export const Carpets = () => {
+  const [inProp, setInProp] = useState(false);
+  return (
+    <div>
+      {/* <CSSTransition in={inProp} timeout={200} classNames="my-node">
+        <div>{"I'll receive my-node-* classes"}</div>
+      </CSSTransition>
+      <button type="button" onClick={() => setInProp(!inProp)}>
+        Click to Enter
+      </button> */}
+      <HymnCarpet>
+          <HymnCarpetItem>
+              Hi
+          </HymnCarpetItem>
+          <HymnCarpetItem>
+              Hi
+          </HymnCarpetItem>
+          <HymnCarpetItem>
+              Hi
+          </HymnCarpetItem>
+      </HymnCarpet>
+    </div>
+  );
+};
 
 export default Scheduler;

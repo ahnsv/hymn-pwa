@@ -1,11 +1,8 @@
 import React, { ReactNode } from "react";
+import { HymnCarpetChildrenProps } from "./HymnCarpet";
+import { CSSTransition } from "react-transition-group";
 
-interface HymnCarpetRowProps {
-  coordX?: number;
-  coordY?: number;
-  swipeable?: boolean;
-  showButtons?: boolean;
-}
+type HymnCarpetRowProps = HymnCarpetChildrenProps;
 interface HymnCarpetRowState {
   currentIndex: number;
   length: number;
@@ -31,6 +28,10 @@ export default class HymnCarpetRow extends React.Component<
         });
       }
     );
-    return <div className="hymn-carpet-row">{childrenWithProps}</div>;
+    return (
+      <CSSTransition timeout={300} classNames="hymn-carpet-row-ts">
+        <div className="hymn-carpet-row">{childrenWithProps}</div>;
+      </CSSTransition>
+    );
   }
 }

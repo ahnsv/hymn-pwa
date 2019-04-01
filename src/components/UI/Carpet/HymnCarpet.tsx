@@ -1,13 +1,22 @@
 import React from "react";
 import { Swiper } from "../../../utils";
+import { TransitionGroup } from "react-transition-group";
 
 /**
  * Hypothesis 1: four way navigation UI - DONE
  * Hypothesis 2: slot feature - DONE
+ * Hypothesis 3: component import - DONE
+ * TODO: implement layout, navigation
  */
 type Mode = "carousel" | "default";
 interface SwipeMapper {
   [key: string]: () => void;
+}
+export interface HymnCarpetChildrenProps {
+  coordX?: number;
+  coordY?: number;
+  swipeable?: boolean;
+  showButtons?: boolean;
 }
 interface HymnCarpetProps {
   mode?: Mode;
@@ -35,17 +44,19 @@ export default class HymnCarpet extends React.Component<
   }
 
   get _getTotalCoords(): [number, number] {
-    let maxX = 0,
-      maxY = 0;
+    let maxX = 0;
     const children = this.props.children as any[];
-    maxY = children.length;
-    const rows = children
+    // when children is one
+    if (children.length === undefined) {
+      return [0, 0];
+    }
+    children
       .filter(c => c.type.name === "HymnCarpetRow")
       .forEach(v => {
         const r = v.props.children.length;
         if (maxX < r) maxX = r;
       });
-    return [maxX, maxY];
+    return [maxX, children.length];
   }
 
   bindSwiper(el: HTMLElement) {
@@ -82,6 +93,7 @@ export default class HymnCarpet extends React.Component<
           currentCoord: [coordX, ++coordY]
         })
     };
+    // BUG: WHEN SWIPE MULTIPLE TIMES, THERES AN ERROR
     mapper[dir]();
   };
 
@@ -99,7 +111,7 @@ export default class HymnCarpet extends React.Component<
     return (
       <div className="hymn-carpet" onTouchEnd={this.passDirection}>
         Carpet
-        {childrenWithProps}
+        <TransitionGroup className="hymn-carpet-transition-group">{childrenWithProps}</TransitionGroup>
       </div>
     );
   }

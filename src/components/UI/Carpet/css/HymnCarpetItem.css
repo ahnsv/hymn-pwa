@@ -1,0 +1,14 @@
+.hymn-carpet-item-ts-enter {
+  opacity: 0;
+}
+.hymn-carpet-item-ts-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.hymn-carpet-item-ts-exit {
+  opacity: 1;
+}
+.hymn-carpet-item-ts-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}

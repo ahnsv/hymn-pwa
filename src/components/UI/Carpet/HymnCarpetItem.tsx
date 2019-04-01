@@ -1,21 +1,21 @@
 import React from "react";
+import { HymnCarpetChildrenProps } from "./HymnCarpet";
+import { CSSTransition } from "react-transition-group";
 
-interface CarpetItemProps {
-  coordX?: number;
-  coordY?: number;
-  swipeable?: boolean;
-  showButtons?: boolean;
+interface CarpetItemProps extends HymnCarpetChildrenProps {
   children: React.ReactNode;
 }
 
 const CarpetItem = ({ ...props }: CarpetItemProps) => {
   return (
-    <div className="hymn-carpet-item">
-      CoordX: {props.coordX}
-      CoordY: {props.coordY}
-      {props.children}
-    </div>
+    <CSSTransition timeout={300} classNames="hymn-carpet-item-ts">
+      <div className="hymn-carpet-item">
+        CoordX: {props.coordX}
+        CoordY: {props.coordY}
+        {props.children}
+      </div>
+    </CSSTransition>
   );
 };
 
-export default CarpetItem
+export default CarpetItem;
