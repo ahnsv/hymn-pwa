@@ -1,8 +1,8 @@
 import React from "react";
 
 interface CarpetItemProps {
-  coordX: number;
-  coordY: number;
+  coordX?: number;
+  coordY?: number;
   swipeable?: boolean;
   showButtons?: boolean;
   children: React.ReactNode;
@@ -17,3 +17,5 @@ const CarpetItem = ({ ...props }: CarpetItemProps) => {
     </div>
   );
 };
+
+export default CarpetItem

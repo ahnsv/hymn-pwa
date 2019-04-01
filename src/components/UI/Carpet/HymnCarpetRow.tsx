@@ -1,6 +1,8 @@
 import React, { ReactNode } from "react";
 
 interface HymnCarpetRowProps {
+  coordX?: number;
+  coordY?: number;
   swipeable?: boolean;
   showButtons?: boolean;
 }
@@ -20,6 +22,15 @@ export default class HymnCarpetRow extends React.Component<
     };
   }
   render() {
-    return <div className="hymn-carpet-row">{this.props.children}</div>;
+    const childrenWithProps = React.Children.map(
+      this.props.children,
+      (c, index) => {
+        return React.cloneElement(c as React.ReactElement, {
+          coordX: index,
+          coordY: this.props.coordY
+        });
+      }
+    );
+    return <div className="hymn-carpet-row">{childrenWithProps}</div>;
   }
 }

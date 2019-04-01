@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import Scheduler from "./components/Main/index";
+import Scheduler, { Carpets } from "./components/Main/index";
 import { Route, Switch } from "react-router-dom";
 import { SignIn } from "./components/SignIn/index";
 import { BasicInfoSetup as ProfileAnonymous, BasicForm } from "./components/Profile/ProfileAnonymous";
@@ -32,7 +32,7 @@ class AppComponent extends Component {
 					<Route path="/setup" component={ProfileAnonymous} />
 					<Route path="/form" component={BasicForm} />
 					<Route path="/calendar" component={VacationScheduler} />
-					<Route path="/carpet" component={HymnCarpet} />
+					<Route path="/carpet" component={Carpets} />
 				</Switch>
 			</div>
 		);
