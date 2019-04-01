@@ -31,7 +31,7 @@
 .hymn-dates {
     display: grid;
     grid-template: repeat(7, auto) / repeat(7, auto);
-    grid-gap: 3vw;
+    grid-gap: 2vw 0;
     opacity: 0.8;
 }
 
@@ -57,4 +57,9 @@
 
 .hymn-month-nav-next {
     right: 0
+}
+
+.hymn-calendar-monthly a {
+    text-decoration: none;
+    color: inherit;
 }
