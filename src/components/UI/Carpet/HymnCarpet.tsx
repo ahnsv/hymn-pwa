@@ -6,7 +6,7 @@ import { TransitionGroup } from "react-transition-group";
  * Hypothesis 1: four way navigation UI - DONE
  * Hypothesis 2: slot feature - DONE
  * Hypothesis 3: component import - DONE
- * TODO: implement layout, navigation
+ * TODO: implement layout, navigation, indicator
  */
 type Mode = "carousel" | "default";
 interface SwipeMapper {
