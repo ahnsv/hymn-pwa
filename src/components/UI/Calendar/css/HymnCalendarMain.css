@@ -23,7 +23,7 @@
 
 .hymn-days {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, auto);
   margin: 5vh 0;
   font-weight: bolder;
 }

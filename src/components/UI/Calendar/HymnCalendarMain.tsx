@@ -160,8 +160,24 @@ export default class CalenderMain extends React.Component<
           classNames="hymn-calendar-transition"
         >
           <div>
-            <div className="hymn-year">{this.state.year}</div>
-            <Link to="/calendarMonths">
+            <Link
+              to={{
+                pathname: "/calendarYears",
+                state: {
+                  base_year: this.state.year
+                }
+              }}
+            >
+              <div className="hymn-year">{this.state.year}</div>
+            </Link>
+            <Link
+              to={{
+                pathname: "/calendarYears",
+                state: {
+                  base_month: this.state.month
+                }
+              }}
+            >
               <div className="hymn-month">{this.state.month + 1}</div>
             </Link>
             {this.renderDaysAndDates()}

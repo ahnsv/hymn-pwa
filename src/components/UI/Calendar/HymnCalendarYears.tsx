@@ -1,6 +1,7 @@
 import React from "react";
+import { RouteComponentProps } from "react-router-dom";
 
-interface HymnCalendarYearProps {
+interface HymnCalendarYearProps extends RouteComponentProps<any> {
   base_year?: number;
   selected_month?: number;
 }
@@ -13,8 +14,9 @@ export default class HymnCalendarYear extends React.Component<
 > {
   constructor(props: HymnCalendarYearProps) {
     super(props);
+    const { base_year } = this.props.location.state;
     this.state = {
-      current: this.props.base_year as number
+      current: base_year
     };
   }
   render() {
