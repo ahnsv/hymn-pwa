@@ -78,7 +78,7 @@ export default class CalenderMain extends React.Component<
   renderDaysAndDates() {
     const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
     const renderedDays = days.map((d, i) => (
-      <div id={String(i)} key={i}>
+      <div id={d} key={i}>
         {d}
       </div>
     ));

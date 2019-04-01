@@ -1,65 +1,74 @@
 .hymn-calendar-transition-enter {
-    opacity: 0;
+  opacity: 0;
 }
 .hymn-calendar-transition-enter-active {
-    opacity: 1;
-    transition: all .5s ease-in-out;
+  opacity: 1;
+  transition: all 0.5s ease-in-out;
 }
 .hymn-calendar-transition-exit {
-    opacity: 1;
+  opacity: 1;
 }
 .hymn-calendar-transition-exit-active {
-    opacity: 0;
-    transition: all .5s ease-in-out;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
 }
 
 .hymn-year {
-    font-size: 2em;
+  font-size: 2em;
 }
 .hymn-month {
-    font-size: 5em;
-    margin-bottom: 10vh;
+  font-size: 5em;
+  margin-bottom: 10vh;
 }
 
 .hymn-days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    margin: 5vh 0;
-    font-weight: bolder;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin: 5vh 0;
+  font-weight: bolder;
 }
 
 .hymn-dates {
-    display: grid;
-    grid-template: repeat(7, auto) / repeat(7, auto);
-    grid-gap: 2vw 0;
-    opacity: 0.8;
+  display: grid;
+  grid-template: repeat(7, auto) / repeat(7, auto);
+  grid-gap: 2vw 0;
+  opacity: 0.8;
 }
 
 .hymn-dates .current {
-    font-weight: bold;
-    opacity: 1;
+  font-weight: bold;
+  opacity: 1;
 }
 
-.hymn-month-nav-prev, .hymn-month-nav-next {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 2em;
+.hymn-month-nav-prev,
+.hymn-month-nav-next {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
 }
 
 .hymn-month-nav-prev {
-    left: 0;
+  left: 0;
 }
 
 .hymn-month-nav-next {
-    right: 0
+  right: 0;
 }
 
 .hymn-calendar-monthly a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
+}
+
+div#SUN {
+  color: red;
+}
+
+div#SAT {
+  color: blue;
 }
