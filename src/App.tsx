@@ -6,6 +6,7 @@ import { SignIn } from "./components/SignIn/index";
 import { BasicInfoSetup as ProfileAnonymous, BasicForm } from "./components/Profile/ProfileAnonymous";
 import { VacationScheduler } from './components/Scheduler/VacationScheduler'
 import { firebase, withAuthentication } from "./firebase";
+import HymnCarpet from "./components/UI/Carpet/HymnCarpet";
 
 class AppComponent extends Component {
 	constructor(props: any) {
@@ -31,6 +32,7 @@ class AppComponent extends Component {
 					<Route path="/setup" component={ProfileAnonymous} />
 					<Route path="/form" component={BasicForm} />
 					<Route path="/calendar" component={VacationScheduler} />
+					<Route path="/carpet" component={HymnCarpet} />
 				</Switch>
 			</div>
 		);

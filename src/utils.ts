@@ -56,6 +56,7 @@ export class Swiper {
 			threshold: 50
 		}
 	}
+
 	detectDirection(obj: SwipeObject) {
 		// TODO: get angle and map which angle and speed to four directions
 		const { distX, distY, elapsedTime, allowedTime, threshold, restraint } = obj
