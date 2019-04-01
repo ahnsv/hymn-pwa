@@ -5,6 +5,7 @@ import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import { HymnCarpet, HymnCarpetItem, HymnCarpetRow } from "../UI/Carpet";
 import CalenderMain from "../UI/Calendar/HymnCalendarMain";
 import './index.css'
+import HymnCalendarMonths from "../UI/Calendar/HymnCalendarMonths";
 
 const Scheduler = () => (
   <div>
@@ -16,12 +17,6 @@ export const Carpets = () => {
   const [inProp, setInProp] = useState(false);
   return (
     <div>
-      {/* <CSSTransition in={inProp} timeout={200} classNames="my-node">
-        <div>{"I'll receive my-node-* classes"}</div>
-      </CSSTransition>
-      <button type="button" onClick={() => setInProp(!inProp)}>
-        Click to Enter
-      </button> */}
       <HymnCarpet>
           <HymnCarpetItem>
               Hi

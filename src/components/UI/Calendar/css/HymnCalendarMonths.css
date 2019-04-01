@@ -1,0 +1,29 @@
+.hymn-calendar-months {
+  display: grid;
+  grid-template: repeat(4, auto) / repeat(3, auto);
+  grid-gap: 3px;
+}
+
+.calendar-months--month {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#0 {
+  color: orangered;
+}
+
+#6 {
+  color: blue;
+}
+
+.month-link {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    justify-content: center;
+}

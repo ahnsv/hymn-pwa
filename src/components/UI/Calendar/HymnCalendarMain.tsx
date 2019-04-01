@@ -20,12 +20,14 @@ import {
 import HymnCalendarDay from "./HymnCalendarDay";
 import { CSSTransition } from "react-transition-group";
 import "./css/HymnCalendarMain.css";
+import { Link } from "react-router-dom";
 
 interface CalendarProps {
   min_date?: Date;
   max_date?: Date;
   date: Date;
   onDateChanged?: () => {};
+  showArrows?: boolean;
 }
 interface CalendarState {
   current: Date;
@@ -75,7 +77,11 @@ export default class CalenderMain extends React.Component<
 
   renderDaysAndDates() {
     const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-    const renderedDays = days.map((d, i) => <div key={i}>{d}</div>);
+    const renderedDays = days.map((d, i) => (
+      <div id={String(i)} key={i}>
+        {d}
+      </div>
+    ));
     const currentMonthDates = eachDay(
       this.state.min_date,
       this.state.max_date
@@ -133,14 +139,21 @@ export default class CalenderMain extends React.Component<
     );
   }
   render() {
-    return (
-      <div className="hymn-calendar-monthly">
+    const arrows = (
+      <>
         <div className="hymn-month-nav-next" onClick={this.handleNext}>
           <i className="fas fa-angle-right" />
         </div>
         <div className="hymn-month-nav-prev" onClick={this.handlePrev}>
           <i className="fas fa-angle-left" />
         </div>
+      </>
+    );
+    return (
+      <div className="hymn-calendar-monthly">
+        {this.props.showArrows === undefined || this.props.showArrows
+          ? arrows
+          : ""}
         <CSSTransition
           in={true}
           timeout={200}
@@ -148,7 +161,9 @@ export default class CalenderMain extends React.Component<
         >
           <div>
             <div className="hymn-year">{this.state.year}</div>
-            <div className="hymn-month">{this.state.month + 1}</div>
+            <Link to="/calendarMonths">
+              <div className="hymn-month">{this.state.month + 1}</div>
+            </Link>
             {this.renderDaysAndDates()}
           </div>
         </CSSTransition>
