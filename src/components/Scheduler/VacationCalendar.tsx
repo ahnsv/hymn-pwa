@@ -7,4 +7,4 @@ import {
 } from "../UI/Calendar/";
 
 export const Months = () => <CalendarMonths current={new Date()} />;
-export const Years = () => <CalendarYears />;
+export const Years = () => <CalendarMonths current={new Date()} />;
