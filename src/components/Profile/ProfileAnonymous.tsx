@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { HymnForm, HymnInput } from "../UI/Forms";
 import { HymnSteps, HymnStep } from "../UI/Steps";
 import { Transition } from "react-transition-group";
-import Scheduler from "./../Main/index";
+// import {Scheduler} from "./../Main/index";
 
 export interface UserData {
   entrance_date?: Date;

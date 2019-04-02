@@ -6,9 +6,12 @@ import {
   differenceInMilliseconds
 } from "date-fns";
 import { TimeLeft, castToRealTime } from "../shared";
+import "./css/MilitaryShiftTimer.css";
+import { RouteChildrenProps } from "react-router";
 
+export let militaryRange = [];
 type MilitaryServTimeleft = TimeLeft;
-interface MilitaryServiceTimerProps {
+interface MilitaryServiceTimerProps extends RouteChildrenProps {
   entrance: Date;
   mil: string;
 }
@@ -17,6 +20,7 @@ interface MilitaryServiceTimerState {
   isNotEnlistedYet?: boolean;
   percentage: number;
   imprisoned?: number;
+  end_date?: Date;
 }
 export default class MilitaryServiceTimer extends React.Component<
   MilitaryServiceTimerProps,
@@ -95,7 +99,9 @@ export default class MilitaryServiceTimer extends React.Component<
       100
     );
   }
-
+  /**
+   * 복무 남은시간 계산
+   */
   _getServiceTimeLeft(now: Date, end_date: Date) {
     return castToRealTime(now, end_date);
   }
@@ -158,13 +164,14 @@ export default class MilitaryServiceTimer extends React.Component<
           <div className="timer-seconds">
             {seconds !== 0 ? `${seconds}초` : ""}
           </div>
-          <div className="timer-mili">{milliseconds}</div>
         </>
       );
     };
     return (
-      <div>
-        <h1>군생활 {this.state.percentage.toFixed(3)}% 했네여</h1>
+      <div className="military-shift-timer">
+        <h1>현재 군생활 정보</h1>
+        <div>군생활 {this.state.percentage.toFixed(3)}% 하셨어요</div>
+        <h1>전역까지</h1>
         <div className="actual-time-left">{actualTimeLeft()}</div>
       </div>
     );

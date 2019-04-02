@@ -7,8 +7,9 @@
 import React from "react";
 import { getTodayInfo, TimeLeft, castToRealTime } from "../shared";
 import { differenceInMilliseconds } from "date-fns";
-import { Circle } from "rc-progress";
+import { Circle, Line } from "rc-progress";
 import "./css/DailyShiftTimer.css";
+import { RouteChildrenProps } from "react-router";
 
 interface DailyTimeLeft extends TimeLeft {
   hours?: number;
@@ -17,7 +18,7 @@ interface DailyTimeLeft extends TimeLeft {
   milliseconds?: number;
 }
 
-interface DailyShiftTimerProps {
+interface DailyShiftTimerProps extends RouteChildrenProps {
   start_time: string;
   num_of_hrs: number;
   ranges_of_works?: string[][];
@@ -54,6 +55,9 @@ export default class DailyShiftTimer extends React.Component<
       }
       this.calculateTimeLeft(this.props);
     }, 500);
+  }
+  componentWillUpdate() {
+    clearInterval();
   }
   calculateTimeLeft(props: DailyShiftTimerProps) {
     const now = new Date();
@@ -102,7 +106,7 @@ export default class DailyShiftTimer extends React.Component<
   render() {
     // TODO: Implement Carousel for this part
     const beforeStart = <h1 />;
-    const todayOver = <h1 className="shift-done">실근무 끝!</h1>;
+    const todayOver = <p className="shift-done">실근무 끝!</p>;
     const content = (
       <p className="shift-timer">
         남은 근무 <br />
@@ -110,17 +114,17 @@ export default class DailyShiftTimer extends React.Component<
       </p>
     );
     return (
-      <div>
+      <>
         <div className="timer-block">
           {this.state.percentage > 1 ? todayOver : content}
-          <Circle
+          <Line
             className="timer-progress"
             percent={this.state.percentage * 100}
-            strokeWidth="4"
+            strokeWidth="2"
             strokeColor="#2cae00"
           />
         </div>
-      </div>
+      </>
     );
   }
 }

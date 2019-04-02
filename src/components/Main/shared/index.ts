@@ -27,6 +27,8 @@ export interface TodayInfo {
   date: number;
 }
 
+export type DateRange = [Date, Date];
+
 /**
  * Get Today Info
  */

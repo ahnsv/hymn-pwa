@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 import "./App.css";
-import Scheduler, { Carpets } from "./components/Main/index";
+import { Carpets } from "./components/Main/index";
 import { Route, Switch } from "react-router-dom";
-import { SignIn } from "./components/SignIn/index";
-import {
-  BasicInfoSetup as ProfileAnonymous,
-  BasicForm
-} from "./components/Profile/ProfileAnonymous";
+import { BasicForm } from "./components/Profile/ProfileAnonymous";
 import { VacationScheduler } from "./components/Scheduler/VacationScheduler";
 import { firebase, withAuthentication } from "./firebase";
-import HymnCarpet from "./components/UI/Carpet/HymnCarpet";
-import HymnCalendarMonths from "./components/UI/Calendar/HymnCalendarMonths";
 import { Months, Years } from "./components/Scheduler/VacationCalendar";
+import { MilitaryServiceMain } from "./components/Main/MilitaryServiceMain";
+import { DailyShiftMain } from "./components/Main/DailyMain";
 
 class AppComponent extends Component {
   constructor(props: any) {
@@ -28,15 +24,13 @@ class AppComponent extends Component {
     });
   }
   render() {
-    const off_duty = { name: "", range: [""] };
     return (
       <div className="App">
         <Switch>
-          <Route exact={true} path="/" component={Scheduler} />
-          <Route path="/signin" component={SignIn} />
-          <Route path="/setup" component={ProfileAnonymous} />
+          <Route exact={true} path="/" component={MilitaryServiceMain} />
+          <Route path="/daily" component={DailyShiftMain} />
           <Route path="/form" component={BasicForm} />
-          <Route path="/calendar" render={props => <VacationScheduler />} />
+          <Route path="/calendar" render={() => <VacationScheduler />} />
           <Route path="/calendarMonths" component={Months} />
           <Route path="/calendarYears" component={Years} />
           <Route path="/carpet" component={Carpets} />

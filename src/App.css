@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  overflow: hidden;
+}
+
+.App > div {
   padding: 0 10vw;
 }
 

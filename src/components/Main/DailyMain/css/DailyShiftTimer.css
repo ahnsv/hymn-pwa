@@ -1,42 +1,45 @@
 .timer-block {
-    height: 50vh;
+  height: 50vh;
 }
 .shift-timer {
-    font-size: 3em;
-    font-weight: bolder;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 0;
+  font-size: 3em;
+  font-weight: bolder;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: baseline;
+  text-align: left;
+  margin: 0;
 }
 
 .example-enter {
-    opacity: 0.01;
-    width: 0px;
+  opacity: 0.01;
+  width: 0px;
 }
-  
+
 .example-enter.example-enter-active {
-opacity: 1;
-width: 100px;
-transition: 700ms;
+  opacity: 1;
+  width: 100px;
+  transition: 700ms;
 }
 
 .example-leave {
-opacity: 1;
-width: 100px;
+  opacity: 1;
+  width: 100px;
 }
 
 .example-leave.example-leave-active {
-opacity: 0.01;
-width: 0px;
-transition: 700ms;
+  opacity: 0.01;
+  width: 0px;
+  transition: 700ms;
 }
 
 .timer-progress {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: inherit;
-    width: 100%;
+  position: absolute;
+  top: auto;
+  left: 7vw;
+  width: 97vh;
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
