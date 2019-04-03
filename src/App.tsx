@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./App.css";
-import { Carpets } from "./components/Main/index";
 import { Route, Switch } from "react-router-dom";
 import { VacationScheduler } from "./components/Scheduler/VacationScheduler";
 import { firebase, withAuthentication } from "./firebase";
@@ -37,7 +36,6 @@ class AppComponent extends Component<AppProps> {
           <Route path="/calendar" component={() => <CalendarMain date={new Date()} />} />
           <Route path="/calendar/months" component={() => <CalendarMonths current={new Date()} />} />
           <Route path="/calendar/years" component={() => <CalendarYears {...this.props} base_year={2019} />} />
-          <Route path="/carpet" component={Carpets} />
           <Route path="/tutorial" component={TutorialView} />
         </Switch>
       </div>

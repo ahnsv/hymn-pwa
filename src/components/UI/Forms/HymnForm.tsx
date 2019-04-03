@@ -102,6 +102,11 @@ export default class HymnForm extends React.Component<HymnFormProps, HymnFormSta
 				submitable: true
 			})
 		}
+		else {
+			this.setState({
+				submitable: false
+			})
+		}
 	}
 
 
