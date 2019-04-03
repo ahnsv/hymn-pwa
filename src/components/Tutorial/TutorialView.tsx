@@ -22,6 +22,7 @@ class TutorialView extends React.Component<{}, TutorialViewState> {
             }
         })
     }
+    
     render() {
         return (
             <div className="hymn-tutorial">

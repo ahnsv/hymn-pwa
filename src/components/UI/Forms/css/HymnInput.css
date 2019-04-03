@@ -1,0 +1,7 @@
+.hymn-input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+    margin-bottom: 0.7em;
+}
