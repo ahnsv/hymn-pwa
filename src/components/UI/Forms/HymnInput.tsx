@@ -10,6 +10,7 @@ interface HymnInputProps {
     maxLength?: number
     placeholder?: string
     changeHandler?: (k: any, v: any) => void
+    blurHandler?: () => void
     formKey?: string
 }
 interface HymnInputState<T> {
@@ -40,7 +41,7 @@ export default class HymnInput<T> extends React.Component<HymnInputProps, HymnIn
 
     render() {
         return (
-            <div className="hymn-input">
+            <div className="hymn-input" onBlur={this.props.blurHandler}>
                 <label htmlFor={this.props.label}>{this.props.label}</label>
                 <input className="hymn-input" type={this.props.type} onChange={this.handleChange} />
             </div>

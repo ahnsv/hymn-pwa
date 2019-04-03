@@ -5,6 +5,7 @@ interface HymnFormProps {
 	action?: string
 	render?: () => React.ReactNode
 	getFormData: (f: string, values: any | any[]) => void
+	validationRules?: HymnFormValidationRule[]
 }
 interface HymnFormValue {
 	[key: string]: any
@@ -16,6 +17,10 @@ interface HymnFormState {
 	values: HymnFormValue
 	errors?: HymnFormError
 	submitable?: boolean
+}
+export interface HymnFormValidationRule {
+	colName: string
+	apply: ((v: any) => boolean)[]
 }
 export default class HymnForm extends React.Component<HymnFormProps, HymnFormState> {
 	constructor(props: any) {
@@ -29,21 +34,35 @@ export default class HymnForm extends React.Component<HymnFormProps, HymnFormSta
 		}
 		this.handleValues = this.handleValues.bind(this)
 		this.handleFormDataChange = this.handleFormDataChange.bind(this)
+		this.handleBlur = this.handleBlur.bind(this)
 	}
 	private handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>
 	): Promise<void> => {
 		e.preventDefault();
 
-		if (this.validateForm()) {
+		if (this._validateForm(this.props.validationRules)) {
 			const submitSuccess: boolean = await this.submitForm();
 			this.setState({ submitable: submitSuccess });
 		}
 	};
 
-	private validateForm(): boolean {
+	_validateForm(rules: HymnFormValidationRule[] | undefined): boolean {
 		// TODO - validate form
-		return true;
+		if (typeof rules === 'undefined') {
+			return true;
+		}
+		return rules!.reduce((prev, r) => {
+			if (prev !== r.apply.reduce((p, a) => {
+				if (p !== a(this.state.values[r.colName])) {
+					return false;
+				}
+				return a(this.state.values[r.colName])
+			}, true)) {
+				return false
+			}
+			return true
+		}, true);
 	}
 
 	/**
@@ -72,10 +91,19 @@ export default class HymnForm extends React.Component<HymnFormProps, HymnFormSta
 				// handle duplicates
 				const dupKeyNums = (n: any) => Object.keys(prev).map(v => v.split('_')[0]).reduce((count, curr) => { return curr !== n ? count : count + 1 }, 0)
 				const keyNum = `${k}${(dupKeyNums(k) === 0) ? '' : `_${dupKeyNums(k)}`}`
-				return {...prev, [keyNum]: []}
+				return { ...prev, [keyNum]: [] }
 			}, {})
 		})
 	}
+
+	handleBlur() {
+		if (this._validateForm(this.props.validationRules)) {
+			this.setState({
+				submitable: true
+			})
+		}
+	}
+
 
 	render() {
 		const children = React.Children.map(
@@ -83,14 +111,15 @@ export default class HymnForm extends React.Component<HymnFormProps, HymnFormSta
 			(c, index) => {
 				return React.cloneElement(c as React.ReactElement, {
 					changeHandler: this.handleValues,
-					formKey: Object.keys(this.state.values)[index]
+					formKey: Object.keys(this.state.values)[index],
+					blurHandler: this.handleBlur
 				});
 			}
 		);
 		return (
 			<form action={this.props.action} onChange={this.handleFormDataChange} className="hymn-form">
 				{children}
-				{ (this.state.submitable) ? <button>제출</button> : <button>제출 안되영!</button>}
+				{(this.state.submitable) ? <button>제출</button> : <button>제출 안되영!</button>}
 			</form>
 		);
 	}
