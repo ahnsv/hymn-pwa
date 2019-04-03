@@ -1,2 +1,7 @@
-export const HymnForm = require('./HymnForm')
-export const HymnInput = require('./HymnInput')
+import HymnForm from './HymnForm'
+import HymnInput from './HymnInput'
+
+export {
+    HymnForm,
+    HymnInput
+}

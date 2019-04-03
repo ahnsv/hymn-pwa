@@ -4,6 +4,10 @@ body {
 	font-family: 'Spoqa Han Sans', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	text-shadow: 0 0 0.1px rgba(0, 0, 0, 0.3);
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	text-rendering: optimizelegibility;
 }
 
 html,

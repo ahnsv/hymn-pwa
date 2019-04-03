@@ -1,8 +1,9 @@
 import React from "react";
+import { values } from "mobx";
 
 interface HymnFormProps {
-	action: string
-	render: () => React.ReactNode
+	action?: string
+	render?: () => React.ReactNode
 }
 interface HymnFormValue {
 	[key: string]: any
@@ -12,7 +13,7 @@ interface HymnFormError {
 }
 interface HymnFormState {
 	values: HymnFormValue
-	errors: HymnFormError
+	errors?: HymnFormError
 	submitable?: boolean
 }
 export default class HymnForm extends React.Component<HymnFormProps, HymnFormState> {
@@ -50,11 +51,25 @@ export default class HymnForm extends React.Component<HymnFormProps, HymnFormSta
 		return true;
 	}
 
+	handleValues(k: any, v: any) {
+		this.setState({
+			values: {...values, k: v}
+		})
+	}
+
 	render() {
+		const children = React.Children.map(
+			this.props.children,
+			(c, index) => {
+			  return React.cloneElement(c as React.ReactElement, {
+				changeHandler: this.handleValues
+			  });
+			}
+		  );
 		return (
-				<div>
-					Hi
-				</div>
+				<form action={this.props.action}>
+					{children}
+				</form>
 		);
 	}
 }

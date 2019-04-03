@@ -8,6 +8,7 @@ import { firebase, withAuthentication } from "./firebase";
 import { Months, Years } from "./components/Scheduler/VacationCalendar";
 import { MilitaryServiceMain } from "./components/Main/MilitaryServiceMain";
 import { DailyShiftMain } from "./components/Main/DailyMain";
+import { TutorialView } from './components/Tutorial'
 
 class AppComponent extends Component {
   constructor(props: any) {
@@ -34,6 +35,7 @@ class AppComponent extends Component {
           <Route path="/calendarMonths" component={Months} />
           <Route path="/calendarYears" component={Years} />
           <Route path="/carpet" component={Carpets} />
+          <Route path="/tutorial" component={TutorialView} />
         </Switch>
       </div>
     );
