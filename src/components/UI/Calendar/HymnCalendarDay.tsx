@@ -4,6 +4,7 @@ interface CalendarDayProps {
   month: number;
   year: number;
   date: number;
+  day: string
   marked?: boolean;
   className?: string;
 }
@@ -15,7 +16,7 @@ interface CalendarDayState {
 export default class HymnCalendarDay extends React.Component<
   CalendarDayProps,
   CalendarDayState
-> {
+  > {
   constructor(props: CalendarDayProps) {
     super(props);
     this.state = {
@@ -31,6 +32,7 @@ export default class HymnCalendarDay extends React.Component<
       <div
         className={`hymn-date ${this.props.className}`}
         onClick={this.handleClick}
+        style={(this.props.day === "SUN") ? { color: 'red' } : (this.props.day === 'SAT') ? { color: 'blue' } : {}}
       >
         {this.props.children}
       </div>

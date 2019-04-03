@@ -32,7 +32,6 @@
   display: grid;
   grid-template: repeat(7, auto) / repeat(7, auto);
   grid-gap: 2vw 0;
-  opacity: 0.8;
 }
 
 .hymn-dates .current {
@@ -71,4 +70,8 @@ div#SUN {
 
 div#SAT {
   color: blue;
+}
+
+.prev-month-days, .next-month-days {
+  opacity: 0.5;
 }

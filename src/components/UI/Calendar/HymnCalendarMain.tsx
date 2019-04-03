@@ -15,7 +15,8 @@ import {
   addMonths,
   subMonths,
   startOfWeek,
-  endOfWeek
+  endOfWeek,
+  getDay
 } from "date-fns";
 import HymnCalendarDay from "./HymnCalendarDay";
 import { CSSTransition } from "react-transition-group";
@@ -91,6 +92,7 @@ export default class CalenderMain extends React.Component<
         date={getDate(d)}
         month={this.state.month}
         year={this.state.year}
+        day={days[getDay(d)]}
         key={i}
       >
         {getDate(d)}
@@ -108,7 +110,9 @@ export default class CalenderMain extends React.Component<
     };
     const head = eachDay(restOfDays.head[0], restOfDays.head[1]).map((d, i) => (
       <HymnCalendarDay
+        className="prev-month-days"
         date={getDate(d)}
+        day={days[getDay(d)]}
         month={this.state.month}
         year={this.state.year}
         key={i}
@@ -118,7 +122,9 @@ export default class CalenderMain extends React.Component<
     ));
     const tail = eachDay(restOfDays.tail[0], restOfDays.tail[1]).map((d, i) => (
       <HymnCalendarDay
+        className="next-month-days"
         date={getDate(d)}
+        day={days[getDay(d)]}
         month={this.state.month}
         year={this.state.year}
         key={i}
@@ -162,7 +168,7 @@ export default class CalenderMain extends React.Component<
           <div>
             <Link
               to={{
-                pathname: "/calendarYears",
+                pathname: "/calendar/years",
                 state: {
                   base_year: this.state.year
                 }
@@ -172,7 +178,7 @@ export default class CalenderMain extends React.Component<
             </Link>
             <Link
               to={{
-                pathname: "/calendarYears",
+                pathname: "/calendar/months",
                 state: {
                   base_month: this.state.month
                 }

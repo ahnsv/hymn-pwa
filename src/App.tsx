@@ -4,12 +4,17 @@ import { Carpets } from "./components/Main/index";
 import { Route, Switch } from "react-router-dom";
 import { VacationScheduler } from "./components/Scheduler/VacationScheduler";
 import { firebase, withAuthentication } from "./firebase";
-import { Months, Years } from "./components/Scheduler/VacationCalendar";
 import { MilitaryServiceMain } from "./components/Main/MilitaryServiceMain";
 import { DailyShiftMain } from "./components/Main/DailyMain";
 import { TutorialView } from './components/Tutorial'
+import VacationCalendar from "./components/Scheduler/VacationCalendar";
+import { RouteChildrenProps } from "react-router";
+import { CalendarMain, CalendarMonths, CalendarYears } from "./components/UI/Calendar";
 
-class AppComponent extends Component {
+interface AppProps extends RouteChildrenProps {
+
+}
+class AppComponent extends Component<AppProps> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -29,9 +34,9 @@ class AppComponent extends Component {
         <Switch>
           <Route exact={true} path="/" component={MilitaryServiceMain} />
           <Route path="/daily" component={DailyShiftMain} />
-          <Route path="/calendar" render={() => <VacationScheduler />} />
-          <Route path="/calendarMonths" component={Months} />
-          <Route path="/calendarYears" component={Years} />
+          <Route path="/calendar" component={() => <CalendarMain date={new Date()} />} />
+          <Route path="/calendar/months" component={() => <CalendarMonths current={new Date()} />} />
+          <Route path="/calendar/years" component={() => <CalendarYears {...this.props} base_year={2019} />} />
           <Route path="/carpet" component={Carpets} />
           <Route path="/tutorial" component={TutorialView} />
         </Switch>

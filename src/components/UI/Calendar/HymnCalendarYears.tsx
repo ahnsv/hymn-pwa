@@ -1,7 +1,7 @@
 import React from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteChildrenProps } from "react-router";
 
-interface HymnCalendarYearProps extends RouteComponentProps<any> {
+interface HymnCalendarYearProps extends RouteChildrenProps {
   base_year?: number;
   selected_month?: number;
 }
