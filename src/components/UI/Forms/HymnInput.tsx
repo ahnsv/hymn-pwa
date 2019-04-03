@@ -15,28 +15,32 @@ interface HymnInputState<T> {
 }
 
 export default class HymnInput<T> extends React.Component<HymnInputProps, HymnInputState<T>> {
-    state = {
-        value: ''
+    constructor(props: HymnInputProps) {
+        super(props)
+        this.state = {
+            value: ''
+        }
+        this.handleChange = this.handleChange.bind(this)
     }
     handleSubmit(e: Event) {
         e.preventDefault()
         console.log(e)
     }
-    handleChange(e: React.FormEvent<HTMLInputElement>) {
+    handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let { changeHandler } = this.props
         // Type Assertion
         changeHandler = changeHandler as (k: any, v: any) => void
-        e.preventDefault()
         this.setState({
-            value: this.state.value.concat(e.currentTarget.value)
+            value: e.currentTarget.value
         })
-        changeHandler(this.props.label, this.state.value)
+        changeHandler(this.props.label, e.currentTarget.value)
     }
+
     render() {
         return (
             <>
                 <label htmlFor={this.props.label}>{this.props.label}</label>
-                <input className="hymn-input" type={this.props.type} onKeyUp={this.handleChange} />
+                <input className="hymn-input" type={this.props.type} onChange={this.handleChange} />
             </>
         )
     }

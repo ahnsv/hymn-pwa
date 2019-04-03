@@ -39,18 +39,10 @@ const BasicInfoSteps = () => {
   );
 };
 
-const BasicForm = () => {
-  const [inProp, setInProp] = useState(false);
-  return (
-    <Transition in={inProp} timeout={500}>
-      <HymnForm>Hi</HymnForm>
-    </Transition>
-  );
-};
 
 const BasicInfoSetup = () => {
   const [userData, setUserData] = useState<UserData>({});
   return <div className="info-setup">{BasicInfoSteps()}</div>;
 };
 
-export { BasicInfoSetup, BasicForm };
+export { BasicInfoSetup };

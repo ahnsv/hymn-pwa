@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./App.css";
 import { Carpets } from "./components/Main/index";
 import { Route, Switch } from "react-router-dom";
-import { BasicForm } from "./components/Profile/ProfileAnonymous";
 import { VacationScheduler } from "./components/Scheduler/VacationScheduler";
 import { firebase, withAuthentication } from "./firebase";
 import { Months, Years } from "./components/Scheduler/VacationCalendar";
@@ -30,7 +29,6 @@ class AppComponent extends Component {
         <Switch>
           <Route exact={true} path="/" component={MilitaryServiceMain} />
           <Route path="/daily" component={DailyShiftMain} />
-          <Route path="/form" component={BasicForm} />
           <Route path="/calendar" render={() => <VacationScheduler />} />
           <Route path="/calendarMonths" component={Months} />
           <Route path="/calendarYears" component={Years} />

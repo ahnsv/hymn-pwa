@@ -4,6 +4,7 @@ import { values } from "mobx";
 interface HymnFormProps {
 	action?: string
 	render?: () => React.ReactNode
+	getFormData: (f: string, values: any | any[]) => void
 }
 interface HymnFormValue {
 	[key: string]: any
@@ -25,6 +26,8 @@ export default class HymnForm extends React.Component<HymnFormProps, HymnFormSta
 			values: values,
 			errors: errors
 		}
+		this.handleValues = this.handleValues.bind(this)
+		this.handleFormDataChange = this.handleFormDataChange.bind(this)
 	}
 	private handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>
@@ -52,9 +55,16 @@ export default class HymnForm extends React.Component<HymnFormProps, HymnFormSta
 	}
 
 	handleValues(k: any, v: any) {
+		// handle duplicate keys
+		const dupKeyNums = (n: any) => Object.keys(this.state.values).map(v => v.split('_')[0]).reduce((count, curr) => {return curr !== n ? count : count + 1}, 0)
+		const keyNum = `${k}${(dupKeyNums(k) === 0) ? '' : `_${dupKeyNums(k)}`}`
 		this.setState({
-			values: {...values, k: v}
+			values: {...this.state.values, [keyNum]: v}
 		})
+	}
+
+	handleFormDataChange() {
+		this.props.getFormData('form', this.state.values)
 	}
 
 	render() {
@@ -67,7 +77,7 @@ export default class HymnForm extends React.Component<HymnFormProps, HymnFormSta
 			}
 		  );
 		return (
-				<form action={this.props.action}>
+				<form action={this.props.action} onChange={this.handleFormDataChange}>
 					{children}
 				</form>
 		);
