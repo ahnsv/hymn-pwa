@@ -24,7 +24,8 @@ export default class HymnForm extends React.Component<HymnFormProps, HymnFormSta
 		const errors: HymnFormError = {}
 		this.state = {
 			values: values,
-			errors: errors
+			errors: errors,
+			submitable: false
 		}
 		this.handleValues = this.handleValues.bind(this)
 		this.handleFormDataChange = this.handleFormDataChange.bind(this)
@@ -89,6 +90,7 @@ export default class HymnForm extends React.Component<HymnFormProps, HymnFormSta
 		return (
 			<form action={this.props.action} onChange={this.handleFormDataChange} className="hymn-form">
 				{children}
+				{ (this.state.submitable) ? <button>제출</button> : <button>제출 안되영!</button>}
 			</form>
 		);
 	}
