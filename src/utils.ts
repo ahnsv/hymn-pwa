@@ -51,8 +51,8 @@ export class Swiper {
       startTime: 0,
       elapsedTime: 0,
       allowedTime: 500,
-      restraint: 1000,
-      threshold: 0
+      restraint: 500,
+      threshold: 30
     };
   }
 
@@ -86,6 +86,7 @@ export class Swiper {
     if (direction(distX, distY) === undefined) {
       return "Non detected";
     }
+    console.log(angle[direction(distX, distY) as number])
     return angle[direction(distX, distY) as number];
   }
   /**
@@ -108,7 +109,7 @@ export class Swiper {
    * @param {HTMLElement} el
    */
   _addTouchMove(el: HTMLElement) {
-    el.addEventListener("touchmove", function(e) {
+    el.addEventListener("touchmove", function (e) {
       e.preventDefault();
     });
   }
@@ -125,7 +126,6 @@ export class Swiper {
         distY: changedTouches[0].clientY - this._swiperObject.startX,
         elapsedTime: timeStamp - this._swiperObject.startTime
       };
-      console.log(this._swiperObject);
       this.detectDirection(this._swiperObject);
     });
   }

@@ -4,6 +4,7 @@ import { CSSTransition } from "react-transition-group";
 import './css/HymnCarpetItem.css'
 
 interface CarpetItemProps extends HymnCarpetChildrenProps {
+  className?: string
   children: React.ReactNode;
 }
 

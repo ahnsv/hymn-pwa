@@ -1,13 +1,8 @@
 import React from "react";
 import { Swiper } from "../../../utils";
 import { TransitionGroup } from "react-transition-group";
+import cx from 'classnames'
 
-/**
- * Hypothesis 1: four way navigation UI - DONE
- * Hypothesis 2: slot feature - DONE
- * Hypothesis 3: component import - DONE
- * TODO: implement layout, navigation, indicator
- */
 type Mode = "carousel" | "default";
 interface SwipeMapper {
   [key: string]: () => void;
@@ -76,6 +71,7 @@ export default class HymnCarpet extends React.Component<
 
   handleSwipe = (dir: string) => {
     let [coordX, coordY] = this.state.currentCoord;
+    if (coordX >= this.state.totalCoords[0] && coordY >= this.state.totalCoords[1]) return;
     const mapper: SwipeMapper = {
       down: () =>
         this.setState({
@@ -97,11 +93,23 @@ export default class HymnCarpet extends React.Component<
     mapper[dir]();
   };
 
+  componentDidUpdate() {
+    console.log(this.state.currentCoord + ' is now active')
+  }
+
   render() {
-    // TODO: get children and parse them into arrays
+    // TODO: make classname for active work
     const childrenWithProps = React.Children.map(
       this.props.children,
       (c, index) => {
+        if (index === Math.abs(this.state.currentCoord[0])) {
+          return React.cloneElement(c as React.ReactElement, {
+            ...(c as React.ReactElement).props,
+            // className: `active`,
+            coordX: 0,
+            coordY: index,
+          });
+        }
         return React.cloneElement(c as React.ReactElement, {
           coordX: 0,
           coordY: index
