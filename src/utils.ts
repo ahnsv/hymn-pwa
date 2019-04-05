@@ -52,7 +52,7 @@ export class Swiper {
       elapsedTime: 0,
       allowedTime: 500,
       restraint: 1000,
-      threshold: 50
+      threshold: 0
     };
   }
 

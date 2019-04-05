@@ -30,7 +30,7 @@ interface HymnCarpetState {
 export default class HymnCarpet extends React.Component<
   HymnCarpetProps,
   HymnCarpetState
-> {
+  > {
   _SWIPER: Swiper;
   constructor(props: HymnCarpetProps) {
     super(props);
@@ -41,6 +41,7 @@ export default class HymnCarpet extends React.Component<
     this._SWIPER = this.bindSwiper(document.querySelector(
       "html"
     ) as HTMLElement);
+    this.handleSwipe = this.handleSwipe.bind(this)
   }
 
   get _getTotalCoords(): [number, number] {
@@ -93,7 +94,6 @@ export default class HymnCarpet extends React.Component<
           currentCoord: [coordX, ++coordY]
         })
     };
-    // BUG: WHEN SWIPE MULTIPLE TIMES, THERES AN ERROR
     mapper[dir]();
   };
 
@@ -110,7 +110,6 @@ export default class HymnCarpet extends React.Component<
     );
     return (
       <div className="hymn-carpet" onTouchEnd={this.passDirection}>
-        Carpet
         <TransitionGroup className="hymn-carpet-transition-group">{childrenWithProps}</TransitionGroup>
       </div>
     );

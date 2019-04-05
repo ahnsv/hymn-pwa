@@ -155,7 +155,7 @@ export default class MilitaryServiceTimer extends React.Component<
           <div className="timer-months">
             {months !== 0 ? `${months}개월` : ""}
           </div>
-          <div className="timer-weeks">{weeks !== 0 ? `${weeks}년` : ""}</div>
+          <div className="timer-weeks">{weeks !== 0 ? `${weeks}주` : ""}</div>
           <div className="timer-days">{days !== 0 ? `${days}일` : ""}</div>
           <div className="timer-hours">{hours !== 0 ? `${hours}시간` : ""}</div>
           <div className="timer-minutes">

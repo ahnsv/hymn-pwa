@@ -1,3 +1,6 @@
+.hymn-carpet-item {
+  height: -webkit-fill-available;
+}
 .hymn-carpet-item-ts-enter {
   opacity: 0;
 }

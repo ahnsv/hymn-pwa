@@ -9,6 +9,7 @@ import { TutorialView } from './components/Tutorial'
 import VacationCalendar from "./components/Scheduler/VacationCalendar";
 import { RouteChildrenProps } from "react-router";
 import { CalendarMain, CalendarMonths, CalendarYears } from "./components/UI/Calendar";
+import { MainView } from "./components/Main";
 
 interface AppProps extends RouteChildrenProps {
 
@@ -31,7 +32,7 @@ class AppComponent extends Component<AppProps> {
     return (
       <div className="App">
         <Switch>
-          <Route exact={true} path="/" component={MilitaryServiceMain} />
+          <Route exact={true} path="/" component={MainView} />
           <Route path="/daily" component={DailyShiftMain} />
           <Route path="/calendar" component={() => <CalendarMain date={new Date()} />} />
           <Route path="/calendar/months" component={() => <CalendarMonths current={new Date()} />} />
