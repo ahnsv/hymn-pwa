@@ -3,6 +3,7 @@ import { RouteChildrenProps } from 'react-router';
 import { HymnCarpet, HymnCarpetItem, HymnCarpetRow } from '../UI/Carpet';
 import { DailyShiftMain } from './DailyMain';
 import { MilitaryServiceMain } from './MilitaryServiceMain';
+import { CalendarMain } from '../UI/Calendar';
 
 const MainView = (props: RouteChildrenProps) => {
     return (
@@ -14,11 +15,7 @@ const MainView = (props: RouteChildrenProps) => {
                     <HymnCarpetItem> <MilitaryServiceMain {...props} /> </HymnCarpetItem>
                     <HymnCarpetItem> <MilitaryServiceMain {...props} /> </HymnCarpetItem>
             </HymnCarpetRow>
-            <HymnCarpetItem> <DailyShiftMain {...props} /> </HymnCarpetItem>
-            <HymnCarpetItem> <DailyShiftMain {...props} /> </HymnCarpetItem>
-            <HymnCarpetItem> <DailyShiftMain {...props} /> </HymnCarpetItem>
-            <HymnCarpetItem> <DailyShiftMain {...props} /> </HymnCarpetItem>
-            <HymnCarpetItem> <DailyShiftMain {...props} /> </HymnCarpetItem>
+            <HymnCarpetItem> <CalendarMain date={new Date()}/> </HymnCarpetItem>
         </HymnCarpet>)
 }
 

@@ -145,20 +145,20 @@ export default class CalenderMain extends React.Component<
     );
   }
   render() {
-    const arrows = (
-      <>
-        <div className="hymn-month-nav-next" onClick={this.handleNext}>
-          <i className="fas fa-angle-right" />
-        </div>
-        <div className="hymn-month-nav-prev" onClick={this.handlePrev}>
-          <i className="fas fa-angle-left" />
-        </div>
-      </>
+    const arrowRight = (
+      <div className="hymn-month-nav-next" onClick={this.handleNext}>
+        <i className="fas fa-angle-right" />
+      </div>
+    );
+    const arrowLeft = (
+      <div className="hymn-month-nav-prev" onClick={this.handlePrev}>
+        <i className="fas fa-angle-left" />
+      </div>
     );
     return (
       <div className="hymn-calendar-monthly">
         {this.props.showArrows === undefined || this.props.showArrows
-          ? arrows
+          ? arrowLeft
           : ""}
         <CSSTransition
           in={true}
@@ -189,6 +189,9 @@ export default class CalenderMain extends React.Component<
             {this.renderDaysAndDates()}
           </div>
         </CSSTransition>
+        {this.props.showArrows === undefined || this.props.showArrows
+          ? arrowRight
+          : ""}
       </div>
     );
   }
