@@ -4,6 +4,7 @@ import { CSSTransition } from "react-transition-group";
 
 interface HymnCarpetRowProps extends HymnCarpetChildrenProps {
   currItemAvailMoves?: (x: number,y: number) => boolean[]
+  currentActive?: number[]
 }
 interface HymnCarpetRowState {
   currentIndex: number;
@@ -27,7 +28,8 @@ export default class HymnCarpetRow extends React.Component<
         return React.cloneElement(c as React.ReactElement, {
           coordX: index,
           coordY: this.props.coordY,
-          currentItemAvailMoves: this.props.currItemAvailMoves!(index, this.props.coordY!)
+          currentItemAvailMoves: this.props.currItemAvailMoves!(index, this.props.coordY!),
+          currentActive: this.props.currentActive
         });
       }
     );

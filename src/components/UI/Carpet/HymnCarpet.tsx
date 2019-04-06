@@ -106,32 +106,39 @@ export default class HymnCarpet extends React.Component<
 
   handleSwipe = (dir: string) => {
     let [coordX, coordY] = this.state.currentCoord;
-    if (coordX >= this.state.totalCoords[0] && coordY >= this.state.totalCoords[1]) return;
-    const mapper: SwipeMapper = {
-      down: () =>
+    switch (dir) {
+      case 'up':
+        if (!this.state.carpetChildrenCheck[coordY - 1][coordX]) break;
         this.setState({
-          currentCoord: [coordX, --coordY]
-        }),
-      left: () =>
-        this.setState({
-          currentCoord: [--coordX, coordY]
-        }),
-      right: () =>
-        this.setState({
-          currentCoord: [++coordX, coordY]
-        }),
-      up: () =>
-        this.setState({
-          currentCoord: [coordX, ++coordY]
+          currentCoord: [coordX, coordY - 1]
         })
-    };
-    mapper[dir]();
+        break;
+      case 'right':
+        if (!this.state.carpetChildrenCheck[coordY][coordX - 1]) break;
+        this.setState({
+          currentCoord: [coordX - 1, coordY]
+        })
+      case 'left':
+        if (!this.state.carpetChildrenCheck[coordY][coordX + 1]) break;
+        this.setState({
+          currentCoord: [coordX + 1, coordY]
+        })
+      case 'down':
+        if (!this.state.carpetChildrenCheck[coordY + 1][coordX]) break;
+        this.setState(
+          {
+            currentCoord: [coordX, coordY + 1]
+          }
+        )
+      default:
+        break;
+    }
   };
 
   componentDidUpdate() {
     console.log(this.state.currentCoord + ' is now active')
   }
-  
+
   currItemAvailMoves = (coordX: number, coordY: number) => {
     const carpetChildrenCheck = this.state.carpetChildrenCheck
     const checkAvailabilty = (coordX: number, coordY: number) => {
