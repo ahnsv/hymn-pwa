@@ -1,9 +1,37 @@
+@keyframes slide {
+  0% {
+    transform: translateY(0)
+  }
+  50% {
+    transform: translateY(50%)
+  }
+
+  100% {
+    transform: translateY(100%)
+  }
+}
+@keyframes fadein {
+  0% {
+    opacity: 0.1;
+    transform: translateY(-5%)
+  }
+  50% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 1.0;
+  }
+}
+
 .hymn-carpet-item {
   height: -webkit-fill-available;
   display: none;
+  animation: slide 500ms cubic-bezier(0.55, 0.09, 0.68, 0.53);
 }
 .hymn-carpet-item.active {
   display: block;
+  animation: fadein 500ms cubic-bezier(0.55, 0.09, 0.68, 0.53);
 }
 .hymn-carpet-item-ts-enter {
   opacity: 0;
