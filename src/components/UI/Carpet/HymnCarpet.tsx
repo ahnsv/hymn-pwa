@@ -1,7 +1,6 @@
 import React from "react";
 import { Swiper } from "../../../utils";
 import { TransitionGroup } from "react-transition-group";
-import cx from 'classnames'
 
 type Mode = "carousel" | "default";
 interface SwipeMapper {
@@ -13,15 +12,51 @@ export interface HymnCarpetChildrenProps {
   swipeable?: boolean;
   showButtons?: boolean;
 }
+interface AvailableMoves {
+  left: boolean;
+  right: boolean;
+  up: boolean;
+  down: boolean;
+}
 interface HymnCarpetProps {
   mode?: Mode;
   width?: number;
   height?: number;
+  children?: React.ReactNode
 }
 interface HymnCarpetState {
   currentCoord: [number, number];
   totalCoords: [number, number];
+  carpetChildrenCheck: boolean[][];
 }
+
+const deepScanChildren = (children: React.ReactNode) => {
+  let res = []
+  while (true) {
+    let sub: any[] = []
+    if (typeof children !== 'object' || !Array.isArray(children)) {
+      // check in different way
+      if (typeof (children! as React.ReactElement).type === 'symbol') {
+        continue
+      }
+      else {
+        sub.push(true)
+      }
+    }
+    (children! as any[]).forEach(c => {
+      if (typeof c !== 'object') return;
+      if (c.props.children) {
+        sub.push(deepScanChildren(c.props.children))
+        return
+      }
+      sub.push(true)
+    })
+    res.push(sub)
+    break
+  }
+  return res
+}
+
 export default class HymnCarpet extends React.Component<
   HymnCarpetProps,
   HymnCarpetState
@@ -29,9 +64,11 @@ export default class HymnCarpet extends React.Component<
   _SWIPER: Swiper;
   constructor(props: HymnCarpetProps) {
     super(props);
+    console.log(deepScanChildren(props.children))
     this.state = {
       currentCoord: [0, 0],
-      totalCoords: this._getTotalCoords
+      totalCoords: this._getTotalCoords,
+      carpetChildrenCheck: [[]]
     };
     this._SWIPER = this.bindSwiper(document.querySelector(
       "html"
