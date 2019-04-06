@@ -12,7 +12,7 @@ export interface HymnCarpetChildrenProps {
   swipeable?: boolean;
   showButtons?: boolean;
 }
-interface AvailableMoves {
+export interface AvailableMoves {
   left: boolean;
   right: boolean;
   up: boolean;
@@ -34,18 +34,16 @@ const deepScanChildren = (children: React.ReactNode) => {
   let res = []
   while (true) {
     let sub: any[] = []
-    if (typeof children !== 'object' || !Array.isArray(children)) {
-      // check in different way
-      if (typeof (children! as React.ReactElement).type === 'symbol') {
-        continue
-      }
-      else {
-        sub.push(true)
-      }
+    if (typeof children !== 'object' && !Array.isArray(children)) {
+      sub.push(true)
     }
     (children! as any[]).forEach(c => {
       if (typeof c !== 'object') return;
       if (c.props.children) {
+        if (c.type.name === 'HymnCarpetRow') {
+          sub.push(deepScanChildren(c.props.children).flat(3))
+          return
+        }
         sub.push(deepScanChildren(c.props.children))
         return
       }
@@ -54,7 +52,7 @@ const deepScanChildren = (children: React.ReactNode) => {
     res.push(sub)
     break
   }
-  return res
+  return res.flat(1)
 }
 
 export default class HymnCarpet extends React.Component<
@@ -64,16 +62,16 @@ export default class HymnCarpet extends React.Component<
   _SWIPER: Swiper;
   constructor(props: HymnCarpetProps) {
     super(props);
-    console.log(deepScanChildren(props.children))
     this.state = {
       currentCoord: [0, 0],
       totalCoords: this._getTotalCoords,
-      carpetChildrenCheck: [[]]
+      carpetChildrenCheck: deepScanChildren(props.children)
     };
     this._SWIPER = this.bindSwiper(document.querySelector(
       "html"
     ) as HTMLElement);
     this.handleSwipe = this.handleSwipe.bind(this)
+    this.currItemAvailMoves = this.currItemAvailMoves.bind(this)
   }
 
   get _getTotalCoords(): [number, number] {
@@ -133,29 +131,36 @@ export default class HymnCarpet extends React.Component<
   componentDidUpdate() {
     console.log(this.state.currentCoord + ' is now active')
   }
+  
+  currItemAvailMoves = (coordX: number, coordY: number) => {
+    const carpetChildrenCheck = this.state.carpetChildrenCheck
+    const checkAvailabilty = (coordX: number, coordY: number) => {
+      if (carpetChildrenCheck[coordX] === undefined || carpetChildrenCheck[coordX][coordY] === undefined) {
+        return false
+      }
+      return true
+    }
+    return [checkAvailabilty(coordY, coordX - 1), checkAvailabilty(coordY, coordX + 1), checkAvailabilty(coordY - 1, coordX), checkAvailabilty(coordY + 1, coordX)]
+  }
 
   render() {
     // TODO: make classname for active work
+
     const childrenWithProps = React.Children.map(
       this.props.children,
       (c, index) => {
-        if (index === Math.abs(this.state.currentCoord[0])) {
-          return React.cloneElement(c as React.ReactElement, {
-            ...(c as React.ReactElement).props,
-            // className: `active`,
-            coordX: 0,
-            coordY: index,
-          });
-        }
         return React.cloneElement(c as React.ReactElement, {
           coordX: 0,
-          coordY: index
+          coordY: index,
+          currentActive: this.state.currentCoord,
+          currItemAvailMoves: this.currItemAvailMoves,
+          currentItemAvailMoves: this.currItemAvailMoves(0, index)
         });
       }
     );
     return (
       <div className="hymn-carpet" onTouchEnd={this.passDirection}>
-        <TransitionGroup className="hymn-carpet-transition-group">{childrenWithProps}</TransitionGroup>
+        {childrenWithProps}
       </div>
     );
   }

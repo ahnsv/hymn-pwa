@@ -9,18 +9,16 @@ const MainView = (props: RouteChildrenProps) => {
         <HymnCarpet>
             <HymnCarpetItem> <DailyShiftMain {...props} /> </HymnCarpetItem>
             <HymnCarpetRow>
-                <>
                     <HymnCarpetItem> <MilitaryServiceMain {...props} /> </HymnCarpetItem>
                     <HymnCarpetItem> <MilitaryServiceMain {...props} /> </HymnCarpetItem>
                     <HymnCarpetItem> <MilitaryServiceMain {...props} /> </HymnCarpetItem>
                     <HymnCarpetItem> <MilitaryServiceMain {...props} /> </HymnCarpetItem>
-                </>
             </HymnCarpetRow>
-            <HymnCarpetItem> <MilitaryServiceMain {...props} /> </HymnCarpetItem>
             <HymnCarpetItem> <DailyShiftMain {...props} /> </HymnCarpetItem>
-            <HymnCarpetItem> <MilitaryServiceMain {...props} /> </HymnCarpetItem>
             <HymnCarpetItem> <DailyShiftMain {...props} /> </HymnCarpetItem>
-            <HymnCarpetItem> <MilitaryServiceMain {...props} /> </HymnCarpetItem>
+            <HymnCarpetItem> <DailyShiftMain {...props} /> </HymnCarpetItem>
+            <HymnCarpetItem> <DailyShiftMain {...props} /> </HymnCarpetItem>
+            <HymnCarpetItem> <DailyShiftMain {...props} /> </HymnCarpetItem>
         </HymnCarpet>)
 }
 

@@ -2,7 +2,9 @@ import React, { ReactNode } from "react";
 import { HymnCarpetChildrenProps } from "./HymnCarpet";
 import { CSSTransition } from "react-transition-group";
 
-type HymnCarpetRowProps = HymnCarpetChildrenProps;
+interface HymnCarpetRowProps extends HymnCarpetChildrenProps {
+  currItemAvailMoves?: (x: number,y: number) => boolean[]
+}
 interface HymnCarpetRowState {
   currentIndex: number;
   length: number;
@@ -24,14 +26,13 @@ export default class HymnCarpetRow extends React.Component<
       (c, index) => {
         return React.cloneElement(c as React.ReactElement, {
           coordX: index,
-          coordY: this.props.coordY
+          coordY: this.props.coordY,
+          currentItemAvailMoves: this.props.currItemAvailMoves!(index, this.props.coordY!)
         });
       }
     );
     return (
-      <CSSTransition timeout={300} classNames="hymn-carpet-row-ts">
-        <div className="hymn-carpet-row">{childrenWithProps}</div>;
-      </CSSTransition>
+        <div className="hymn-carpet-row">{childrenWithProps}</div>
     );
   }
 }

@@ -1,10 +1,11 @@
 import React from "react";
-import { HymnCarpetChildrenProps } from "./HymnCarpet";
+import { HymnCarpetChildrenProps, AvailableMoves } from "./HymnCarpet";
 import { CSSTransition } from "react-transition-group";
 import './css/HymnCarpetItem.css'
 
 interface CarpetItemProps extends HymnCarpetChildrenProps {
   className?: string
+  currentItemAvailMoves?: AvailableMoves
   children: React.ReactNode;
 }
 
