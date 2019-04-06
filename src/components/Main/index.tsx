@@ -6,7 +6,7 @@ import { MilitaryServiceMain } from './MilitaryServiceMain';
 
 const MainView = (props: RouteChildrenProps) => {
     return (
-        <HymnCarpet>
+        <HymnCarpet mode="carousel">
             <HymnCarpetItem> <DailyShiftMain {...props} /> </HymnCarpetItem>
             <HymnCarpetRow>
                     <HymnCarpetItem> <MilitaryServiceMain {...props} /> </HymnCarpetItem>

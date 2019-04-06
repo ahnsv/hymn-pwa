@@ -12,7 +12,10 @@ export interface HymnCarpetChildrenProps {
   swipeable?: boolean;
   showButtons?: boolean;
 }
-export interface AvailableMoves {
+type MoveObject = {
+  [key: string]: boolean
+}
+export interface AvailableMoves extends MoveObject {
   left: boolean;
   right: boolean;
   up: boolean;
@@ -113,26 +116,29 @@ export default class HymnCarpet extends React.Component<
       return;
     switch (dir) {
       case "up":
-        if (coordY + 1 >= this.state.totalCoords[1] || coordY + 1 < 0) break;
+        if (coordY + 1 >= this.state.totalCoords[1] || coordY + 1 < 0 || !this.state.carpetChildrenCheck[coordY+1][coordX]) break;
         this.setState({
           currentCoord: [coordX, coordY + 1]
         });
         break;
       case "left":
-        if (coordX + 1 >= this.state.totalCoords[0] || coordY + 1 <= 0) break;
+        if (coordX + 1 >= this.state.totalCoords[0] || coordX + 1 < 0 || !this.state.carpetChildrenCheck[coordY][coordX+1]) break;
         this.setState({
           currentCoord: [coordX + 1, coordY]
         });
+        break;
       case "right":
-        if (coordX - 1 >= this.state.totalCoords[0] || coordY - 1 <= 0) break;
+        if (coordX - 1 >= this.state.totalCoords[0] || coordX - 1 < 0 || !this.state.carpetChildrenCheck[coordY][coordX-1]) break;
         this.setState({
           currentCoord: [coordX - 1, coordY]
         });
+        break;
       case "down":
-        if (coordY - 1 >= this.state.totalCoords[1] || coordY - 1 < 0) break;
+        if (coordY - 1 >= this.state.totalCoords[1] || coordY - 1 < 0 || !this.state.carpetChildrenCheck[coordY-1][coordX]) break;
         this.setState({
           currentCoord: [coordX, coordY - 1]
         });
+        break;
       default:
         break;
     }
@@ -176,7 +182,7 @@ export default class HymnCarpet extends React.Component<
     );
     return (
       <div className="hymn-carpet" onTouchEnd={this.passDirection}>
-        {childrenWithProps}
+        <TransitionGroup>{childrenWithProps}</TransitionGroup>
       </div>
     );
   }
