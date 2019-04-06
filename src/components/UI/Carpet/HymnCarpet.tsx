@@ -144,8 +144,6 @@ export default class HymnCarpet extends React.Component<
   }
 
   render() {
-    // TODO: make classname for active work
-
     const childrenWithProps = React.Children.map(
       this.props.children,
       (c, index) => {
