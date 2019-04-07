@@ -3,9 +3,6 @@ import { Swiper } from "../../../utils";
 import { TransitionGroup } from "react-transition-group";
 
 type Mode = "carousel" | "default";
-interface SwipeMapper {
-  [key: string]: () => void;
-}
 export interface HymnCarpetChildrenProps {
   coordX?: number;
   coordY?: number;
@@ -13,8 +10,8 @@ export interface HymnCarpetChildrenProps {
   showButtons?: boolean;
 }
 type MoveObject = {
-  [key: string]: boolean
-}
+  [key: string]: boolean;
+};
 export interface AvailableMoves extends MoveObject {
   left: boolean;
   right: boolean;
@@ -33,7 +30,11 @@ interface HymnCarpetState {
   carpetChildrenCheck: boolean[][][];
 }
 function flattenDeep(arr1: any[]): any[] {
-  return arr1.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), []);
+  return arr1.reduce(
+    (acc, val) =>
+      Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val),
+    []
+  );
 }
 const deepScanChildren = (children: React.ReactNode) => {
   const res = [];
@@ -59,6 +60,25 @@ const deepScanChildren = (children: React.ReactNode) => {
   }
   return res;
 };
+
+/**
+ * @original Hymn Carpet Component
+ * @description
+ * [en] Carpet Component. A carpet component enables users to navigate components with swipe and click/touch like magic carpet
+ * @example
+ *    <HymnCarpet mode="carousel">
+ *       <HymnCarpetItem>
+ *          <DailyShiftMain {...props} />
+ *       </HymnCarpetItem>
+ *       <HymnCarpetRow>
+ *          <HymnCarpetItem> <MilitaryServiceMain {...props} /> </HymnCarpetItem>
+ *          <HymnCarpetItem> <MilitaryServiceMain {...props} /> </HymnCarpetItem>
+ *          <HymnCarpetItem> <MilitaryServiceMain {...props} /> </HymnCarpetItem>
+ *          <HymnCarpetItem> <MilitaryServiceMain {...props} /> </HymnCarpetItem>
+ *       </HymnCarpetRow>
+ *       <HymnCarpetItem> <CalendarMain date={new Date()}/> </HymnCarpetItem>
+ *    </HymnCarpet>
+ */
 
 export default class HymnCarpet extends React.Component<
   HymnCarpetProps,
@@ -86,10 +106,13 @@ export default class HymnCarpet extends React.Component<
     if (children.length === undefined) {
       return [0, 0];
     }
+    /**
+     * BUG: Does not work in production setting, why?
+     */
     children
       .filter(c => c.type.name === "HymnCarpetRow")
       .forEach(v => {
-        const r = v.length;
+        const r = v.props.children.length;
         if (maxX < r) maxX = r;
       });
     return [maxX, children.length];
@@ -121,7 +144,11 @@ export default class HymnCarpet extends React.Component<
        * Visually going up, swipe down
        */
       case "down":
-        if (coordY - 1 < 0 || !this.state.carpetChildrenCheck[0][coordY-1][coordX]) break;
+        if (
+          coordY - 1 < 0 ||
+          !this.state.carpetChildrenCheck[0][coordY - 1][coordX]
+        )
+          break;
         this.setState({
           currentCoord: [coordX, coordY - 1]
         });
@@ -130,13 +157,23 @@ export default class HymnCarpet extends React.Component<
        * Visually going right, swipe left
        */
       case "left":
-        if (coordX + 1 >= this.state.totalCoords[0] || coordX + 1 < 0 || !this.state.carpetChildrenCheck[0][coordY][coordX+1]) break;
+        if (
+          coordX + 1 >= this.state.totalCoords[0] ||
+          coordX + 1 < 0 ||
+          !this.state.carpetChildrenCheck[0][coordY][coordX + 1]
+        )
+          break;
         this.setState({
           currentCoord: [coordX + 1, coordY]
         });
         break;
       case "right":
-        if (coordX - 1 >= this.state.totalCoords[0] || coordX - 1 < 0 || !this.state.carpetChildrenCheck[0][coordY][coordX-1]) break;
+        if (
+          coordX - 1 >= this.state.totalCoords[0] ||
+          coordX - 1 < 0 ||
+          !this.state.carpetChildrenCheck[0][coordY][coordX - 1]
+        )
+          break;
         this.setState({
           currentCoord: [coordX - 1, coordY]
         });
@@ -145,9 +182,13 @@ export default class HymnCarpet extends React.Component<
        * Visually going down, swipe up
        */
       case "up":
-        if (coordY + 1 >= this.state.totalCoords[1] || !this.state.carpetChildrenCheck[0][coordY+1][coordX]) break;
+        if (
+          coordY + 1 >= this.state.totalCoords[1] ||
+          !this.state.carpetChildrenCheck[0][coordY + 1][coordX]
+        )
+          break;
         this.setState({
-          currentCoord: [coordX, coordY + 1]  
+          currentCoord: [coordX, coordY + 1]
         });
         break;
       default:
@@ -162,8 +203,8 @@ export default class HymnCarpet extends React.Component<
   changeCurrentCoord = (coordX: number, coordY: number) => {
     this.setState({
       currentCoord: [coordX, coordY]
-    })
-  }
+    });
+  };
 
   currItemAvailMoves = (coordX: number, coordY: number) => {
     const carpetChildrenCheck = this.state.carpetChildrenCheck;
