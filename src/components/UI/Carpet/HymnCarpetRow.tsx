@@ -3,6 +3,7 @@ import { HymnCarpetChildrenProps } from "./HymnCarpet";
 import { CSSTransition } from "react-transition-group";
 
 interface HymnCarpetRowProps extends HymnCarpetChildrenProps {
+  changeCurrentCoords?: (dir: string) => void;
   currItemAvailMoves?: (x: number,y: number) => boolean[]
   currentActive?: number[]
 }
@@ -26,6 +27,7 @@ export default class HymnCarpetRow extends React.Component<
       this.props.children,
       (c, index) => {
         return React.cloneElement(c as React.ReactElement, {
+          changeCurrentCoords: this.props.changeCurrentCoords,
           coordX: index,
           coordY: this.props.coordY,
           currentItemAvailMoves: this.props.currItemAvailMoves!(index, this.props.coordY!),
