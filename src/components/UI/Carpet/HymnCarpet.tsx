@@ -30,9 +30,11 @@ interface HymnCarpetProps {
 interface HymnCarpetState {
   currentCoord: [number, number];
   totalCoords: [number, number];
-  carpetChildrenCheck: boolean[][];
+  carpetChildrenCheck: boolean[][][];
 }
-
+function flattenDeep(arr1: any[]): any[] {
+  return arr1.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), []);
+}
 const deepScanChildren = (children: React.ReactNode) => {
   const res = [];
   while (true) {
@@ -44,10 +46,10 @@ const deepScanChildren = (children: React.ReactNode) => {
       if (typeof c !== "object") return;
       if (c.props.children) {
         if (c.type.name === "HymnCarpetRow") {
-          sub.push(deepScanChildren(c.props.children).flat(3));
+          sub.push(flattenDeep(deepScanChildren(c.props.children)));
           return;
         }
-        sub.push(deepScanChildren(c.props.children));
+        sub.push(flattenDeep(deepScanChildren(c.props.children)));
         return;
       }
       sub.push(true);
@@ -55,7 +57,7 @@ const deepScanChildren = (children: React.ReactNode) => {
     res.push(sub);
     break;
   }
-  return res.flat(1);
+  return res;
 };
 
 export default class HymnCarpet extends React.Component<
@@ -104,7 +106,7 @@ export default class HymnCarpet extends React.Component<
   }
 
   passDirection = (e: React.TouchEvent) => {
-    this.handleSwipe(this._SWIPER.detectDirection(this._SWIPER._swiperObject));
+    this.handleSwipe(this._SWIPER.calc());
   };
 
   handleSwipe = (dir: string) => {
@@ -115,28 +117,37 @@ export default class HymnCarpet extends React.Component<
     )
       return;
     switch (dir) {
-      case "up":
-        if (coordY + 1 >= this.state.totalCoords[1] || coordY + 1 < 0 || !this.state.carpetChildrenCheck[coordY+1][coordX]) break;
+      /**
+       * Visually going up, swipe down
+       */
+      case "down":
+        if (coordY - 1 < 0 || !this.state.carpetChildrenCheck[0][coordY-1][coordX]) break;
         this.setState({
-          currentCoord: [coordX, coordY + 1]
+          currentCoord: [coordX, coordY - 1]
         });
         break;
+      /**
+       * Visually going right, swipe left
+       */
       case "left":
-        if (coordX + 1 >= this.state.totalCoords[0] || coordX + 1 < 0 || !this.state.carpetChildrenCheck[coordY][coordX+1]) break;
+        if (coordX + 1 >= this.state.totalCoords[0] || coordX + 1 < 0 || !this.state.carpetChildrenCheck[0][coordY][coordX+1]) break;
         this.setState({
           currentCoord: [coordX + 1, coordY]
         });
         break;
       case "right":
-        if (coordX - 1 >= this.state.totalCoords[0] || coordX - 1 < 0 || !this.state.carpetChildrenCheck[coordY][coordX-1]) break;
+        if (coordX - 1 >= this.state.totalCoords[0] || coordX - 1 < 0 || !this.state.carpetChildrenCheck[0][coordY][coordX-1]) break;
         this.setState({
           currentCoord: [coordX - 1, coordY]
         });
         break;
-      case "down":
-        if (coordY - 1 >= this.state.totalCoords[1] || coordY - 1 < 0 || !this.state.carpetChildrenCheck[coordY-1][coordX]) break;
+      /**
+       * Visually going down, swipe up
+       */
+      case "up":
+        if (coordY + 1 >= this.state.totalCoords[1] || !this.state.carpetChildrenCheck[0][coordY+1][coordX]) break;
         this.setState({
-          currentCoord: [coordX, coordY - 1]
+          currentCoord: [coordX, coordY + 1]
         });
         break;
       default:
@@ -152,8 +163,8 @@ export default class HymnCarpet extends React.Component<
     const carpetChildrenCheck = this.state.carpetChildrenCheck;
     const checkAvailabilty = (coordX: number, coordY: number) => {
       if (
-        carpetChildrenCheck[coordX] === undefined ||
-        carpetChildrenCheck[coordX][coordY] === undefined
+        carpetChildrenCheck[0][coordX] === undefined ||
+        carpetChildrenCheck[0][coordX][coordY] === undefined
       ) {
         return false;
       }

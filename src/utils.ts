@@ -24,82 +24,93 @@ export function pluralize(count: number, word: string) {
  * Side-note: import rxjs and mix it up with it
  */
 type SwipeObject = {
-  startX: number;
-  startY: number;
-  distX: number;
-  distY: number;
-  startTime: number;
-  elapsedTime: number;
-  allowedTime: number;
-  restraint: number;
-  threshold: number;
+  touchstart?: TouchEvent
+  touchend?: TouchEvent
+  result?: {direction: string, velocity: {x: number, y: number}, distance: number}
 };
+interface Directions {
+  [key: string]: string
+}
 export class Swiper {
   ElToBind: HTMLElement;
   _swiperObject: SwipeObject;
+  _DIRECTIONS: Directions
   constructor(ElToBind: HTMLElement) {
     this._addTouchEnd = this._addTouchEnd.bind(this);
     this._addTouchMove = this._addTouchMove.bind(this);
     this._addTouchStart = this._addTouchStart.bind(this);
-    this.detectDirection = this.detectDirection.bind(this);
+    this.calc = this.calc.bind(this);
     this.ElToBind = ElToBind;
-    this._swiperObject = {
-      startX: 0,
-      startY: 0,
-      distX: 0,
-      distY: 0,
-      startTime: 0,
-      elapsedTime: 0,
-      allowedTime: 500,
-      restraint: 500,
-      threshold: 30
+    this._swiperObject = {};
+    this._DIRECTIONS = { DIRECTION_LEFT: 'left', DIRECTION_RIGHT: 'right', DIRECTION_UP: 'up', DIRECTION_DOWN: 'down' };
+  }
+
+  /**
+   * Get direction from touchstart and touchend events
+   */
+  getDirection = (touch1: TouchEvent, touch2: TouchEvent) => {
+    const first = touch1.changedTouches[0]
+    const second = touch2.changedTouches[0]
+    const x = Math.abs(first.clientX - second.clientX)
+    const y = Math.abs(first.clientY - second.clientY)
+
+    if (x >= y) {
+      return first.clientX - second.clientX > 0 ? this._DIRECTIONS.DIRECTION_LEFT : this._DIRECTIONS.DIRECTION_RIGHT
+    }
+    return first.clientY - second.clientY > 0 ? this._DIRECTIONS.DIRECTION_UP : this._DIRECTIONS.DIRECTION_DOWN
+  }
+
+  getAngle = (touch1: TouchEvent, touch2: TouchEvent) => {
+    const first = touch1.changedTouches[0]
+    const second = touch2.changedTouches[0]
+    var x = second.clientX - first.clientX,
+        y = second.clientY - first.clientY;
+
+    return Math.atan2(y, x) * 180 / Math.PI;
+  }
+
+  getDistance = (touch1: TouchEvent, touch2: TouchEvent) => {
+    const first = touch1.changedTouches[0]
+    const second = touch2.changedTouches[0]
+    var x = second.clientX - first.clientX,
+        y = second.clientY - first.clientY;
+
+    return Math.sqrt((x * x) + (y * y));
+  }
+
+  getVelocity = (touch1: TouchEvent, touch2: TouchEvent) => {
+    const first = touch1.changedTouches[0]
+    const second = touch2.changedTouches[0]
+    const deltaX = second.clientX - first.clientX
+    const deltaY = second.clientY - first.clientY
+    const deltaTime = touch2.timeStamp - touch1.timeStamp
+    return {
+      x: Math.abs(deltaX / deltaTime) || 0,
+      y: Math.abs(deltaY / deltaTime) || 0
     };
   }
 
-  detectDirection(obj: SwipeObject) {
+  calc() {
     // TODO: get angle and map which angle and speed to four directions
-    const {
-      distX,
-      distY,
-      elapsedTime,
-      allowedTime,
-      threshold,
-      restraint
-    } = obj;
-    const angle = ["left", "right", "up", "down"];
-    const direction = (diffX: number, diffY: number) => {
-      if (elapsedTime < allowedTime) {
-        if (Math.abs(diffX) >= threshold && Math.abs(diffY) <= restraint) {
-          return diffX < 0 ? 0 : 1;
-        } else if (
-          Math.abs(diffY) >= threshold &&
-          Math.abs(diffX) <= restraint
-        ) {
-          return diffY < 0 ? 2 : 3;
-        } else {
-          return undefined;
-        }
-      } else {
-        return undefined;
-      }
-    };
-    if (direction(distX, distY) === undefined) {
-      return "Non detected";
+    const {touchstart, touchend} = this._swiperObject
+    this._swiperObject.result = {
+      direction: this.getDirection(touchstart!, touchend!),
+      velocity: this.getVelocity(touchstart!, touchend!),
+      distance: this.getDistance(touchstart!, touchend!)
     }
-    console.log(angle[direction(distX, distY) as number])
-    return angle[direction(distX, distY) as number];
+    if (this._swiperObject.result.velocity.x > 0.6 || this._swiperObject.result.velocity.y > 0.6) {
+      return this._swiperObject.result.direction
+    }
+    return ''
   }
   /**
    * Add Touch Start Event Listener
    * @param {HTMLElement} el
    */
   _addTouchStart(el: HTMLElement) {
-    el.addEventListener("touchstart", ({ changedTouches, timeStamp }) => {
+    el.addEventListener("touchstart", (e: TouchEvent) => {
       this._swiperObject = {
-        ...this._swiperObject,
-        startX: changedTouches[0].clientX,
-        startY: changedTouches[0].clientY,
-        startTime: timeStamp
+        touchstart: e
       };
     });
   }
@@ -119,14 +130,12 @@ export class Swiper {
    * @param {HTMLElement} el
    */
   _addTouchEnd(el: HTMLElement) {
-    el.addEventListener("touchend", ({ changedTouches, timeStamp }) => {
+    el.addEventListener("touchend", (e: TouchEvent) => {
       this._swiperObject = {
         ...this._swiperObject,
-        distX: changedTouches[0].clientX - this._swiperObject.startX,
-        distY: changedTouches[0].clientY - this._swiperObject.startX,
-        elapsedTime: timeStamp - this._swiperObject.startTime
+        touchend: e
       };
-      this.detectDirection(this._swiperObject);
+      this.calc()
     });
   }
 
