@@ -147,7 +147,7 @@ export default class HymnCarpet extends React.Component<
       case "up":
         if (coordY + 1 >= this.state.totalCoords[1] || !this.state.carpetChildrenCheck[0][coordY+1][coordX]) break;
         this.setState({
-          currentCoord: [coordX, coordY + 1]
+          currentCoord: [coordX, coordY + 1]  
         });
         break;
       default:
@@ -189,7 +189,7 @@ export default class HymnCarpet extends React.Component<
       this.props.children,
       (c, index) => {
         return React.cloneElement(c as React.ReactElement, {
-          changeCurrentCoords: this.changeCurrentCoord,
+          changeCurrentCoords: this.handleSwipe,
           coordX: 0,
           coordY: index,
           currentActive: this.state.currentCoord,
