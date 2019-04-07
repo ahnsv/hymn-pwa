@@ -15,7 +15,7 @@ const MainView = (props: RouteChildrenProps) => {
                     <HymnCarpetItem> <MilitaryServiceMain {...props} /> </HymnCarpetItem>
                     <HymnCarpetItem> <MilitaryServiceMain {...props} /> </HymnCarpetItem>
             </HymnCarpetRow>
-            <HymnCarpetItem> <CalendarMain date={new Date()}/> </HymnCarpetItem>
+            <HymnCarpetItem style={{padding: 0}}> <CalendarMain date={new Date()}/> </HymnCarpetItem>
         </HymnCarpet>)
 }
 

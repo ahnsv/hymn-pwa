@@ -36,6 +36,7 @@ interface CalendarState {
   year: number;
   min_date: Date;
   max_date: Date;
+  selection: number | number[];
 }
 
 export default class CalenderMain extends React.Component<
@@ -49,7 +50,8 @@ export default class CalenderMain extends React.Component<
       month: getMonth(this.props.date),
       year: getYear(this.props.date),
       min_date: startOfMonth(this.props.date),
-      max_date: endOfMonth(this.props.date)
+      max_date: endOfMonth(this.props.date),
+      selection: 0
     };
   }
 
@@ -61,6 +63,30 @@ export default class CalenderMain extends React.Component<
       max_date: endOfMonth(this.state.current)
     });
   }
+
+  handleSelection = (e: React.MouseEvent) => {
+    const elm = e.currentTarget;
+    // initial
+    if (this.state.selection === 0) {
+      this.setState({
+        selection: parseInt(elm.innerHTML)
+      });
+    }
+    else {
+      // make it an array
+      if (typeof this.state.selection === 'number') {
+        this.setState({
+          selection: [this.state.selection, parseInt(elm.innerHTML)]
+        })
+      }
+      // append to the array
+      else {
+        this.setState({
+          selection: [...this.state.selection, parseInt(elm.innerHTML)]
+        })
+      }
+    }
+  };
 
   handleNext = () => {
     this.setState({
@@ -94,6 +120,8 @@ export default class CalenderMain extends React.Component<
         year={this.state.year}
         day={days[getDay(d)]}
         key={i}
+        passSelection={this.handleSelection}
+        range={(typeof this.state.selection === 'object') ? this.state.selection : []}
       >
         {getDate(d)}
       </HymnCalendarDay>
@@ -116,6 +144,8 @@ export default class CalenderMain extends React.Component<
         month={this.state.month}
         year={this.state.year}
         key={i}
+        passSelection={this.handleSelection}
+        range={(typeof this.state.selection === 'object') ? this.state.selection : []}
       >
         {getDate(d)}
       </HymnCalendarDay>
@@ -128,6 +158,8 @@ export default class CalenderMain extends React.Component<
         month={this.state.month}
         year={this.state.year}
         key={i}
+        passSelection={this.handleSelection}
+        range={(typeof this.state.selection === 'object') ? this.state.selection : []}
       >
         {getDate(d)}
       </HymnCalendarDay>
@@ -155,6 +187,20 @@ export default class CalenderMain extends React.Component<
         <i className="fas fa-angle-left" />
       </div>
     );
+    const monthText = [
+      "JAN",
+      "FEB",
+      "MAR",
+      "APR",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AUG",
+      "SEP",
+      "OCT",
+      "NOV",
+      "DEC"
+    ];
     return (
       <div className="hymn-calendar-monthly">
         {this.props.showArrows === undefined || this.props.showArrows
@@ -165,7 +211,7 @@ export default class CalenderMain extends React.Component<
           timeout={200}
           classNames="hymn-calendar-transition"
         >
-          <div>
+          <div className="monthly-dates">
             <Link
               to={{
                 pathname: "/calendar/years",
@@ -184,7 +230,12 @@ export default class CalenderMain extends React.Component<
                 }
               }}
             >
-              <div className="hymn-month">{this.state.month + 1}</div>
+              <div className="hymn-month">
+                {this.state.month + 1}
+                <span style={{ fontSize: "0.5em" }}>
+                  {monthText[this.state.month]}
+                </span>
+              </div>
             </Link>
             {this.renderDaysAndDates()}
           </div>

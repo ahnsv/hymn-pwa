@@ -11,6 +11,7 @@ interface CarpetItemProps extends HymnCarpetChildrenProps {
   currentItemAvailMoves?: AvailableMoves;
   children: React.ReactNode;
   currentActive?: number[];
+  style?: React.CSSProperties;
 }
 
 export default class CarpetItem extends React.Component<CarpetItemProps, {}>{
@@ -84,7 +85,7 @@ export default class CarpetItem extends React.Component<CarpetItemProps, {}>{
   render() {
     return (
       <CSSTransition timeout={300} classNames="hymn-carpet-item-ts">
-        <div className={`hymn-carpet-item ${this.active(this.props.currentActive)}`}>
+        <div className={`hymn-carpet-item ${this.active(this.props.currentActive)}`} style={this.props.style!}>
           {this.props.children}
           {this.dirs.map((d, i) => {
             switch (d) {

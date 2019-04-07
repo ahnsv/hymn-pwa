@@ -1,0 +1,9 @@
+.clicked {
+    background: #1cb5da;
+    color: whitesmoke;
+    border-radius: 5px;
+}
+.inrange {
+    background: #10687e;
+    color: whitesmoke;
+}
