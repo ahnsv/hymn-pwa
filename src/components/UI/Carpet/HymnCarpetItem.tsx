@@ -4,6 +4,7 @@ import { CSSTransition } from "react-transition-group";
 import "./css/HymnCarpetItem.css";
 
 interface CarpetItemProps extends HymnCarpetChildrenProps {
+  changeCurrentCoord?: (x: number, y: number) => void;
   coordX?: number;
   coordY?: number;
   className?: string;
@@ -26,29 +27,30 @@ const CarpetItem = ({ ...props }: CarpetItemProps) => {
     }
     return;
   });
-  const arrowByDirection = (dir: string, key: number) => {
+  const arrowByDirection = (dir: string, key: number, props: CarpetItemProps) => {
+    const {coordX, coordY} = props
     switch (dir) {
       case "left":
         return (
-          <div key={key} className="arrow left">
+          <div key={key} className="arrow left" onClick={() => props.changeCurrentCoord!(coordX!+1, coordY!)}>
             <i className="fas fa-angle-left" />
           </div>
         );
       case "right":
         return (
-          <div key={key} className="arrow right">
+          <div key={key} className="arrow right" onClick={() => props.changeCurrentCoord!(coordX!-1, coordY!)}>
             <i className="fas fa-angle-right" />
           </div>
         );
       case "up":
         return (
-          <div key={key} className="arrow up">
+          <div key={key} className="arrow up" onClick={() => props.changeCurrentCoord!(coordX!, coordY!+1)}>
             <i className="fas fa-angle-up" />
           </div>
         );
       case "down":
         return (
-          <div key={key} className="arrow down">
+          <div key={key} className="arrow down" onClick={() => props.changeCurrentCoord!(coordX!, coordY!-1)}>
             <i className="fas fa-angle-down" />
           </div>
         );
@@ -63,13 +65,13 @@ const CarpetItem = ({ ...props }: CarpetItemProps) => {
         {dirs.map((d, i) => {
           switch (d) {
             case 0:
-              return arrowByDirection("left", i);
+              return arrowByDirection("left", i, props);
             case 1:
-              return arrowByDirection("right", i);
+              return arrowByDirection("right", i, props);
             case 2:
-              return arrowByDirection("up", i);
+              return arrowByDirection("up", i, props);
             case 3:
-              return arrowByDirection("down", i);
+              return arrowByDirection("down", i, props);
           }
         })}
       </div>

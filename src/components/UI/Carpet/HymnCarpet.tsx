@@ -159,6 +159,12 @@ export default class HymnCarpet extends React.Component<
     console.log(this.state.currentCoord + " is now active");
   }
 
+  changeCurrentCoord = (coordX: number, coordY: number) => {
+    this.setState({
+      currentCoord: [coordX, coordY]
+    })
+  }
+
   currItemAvailMoves = (coordX: number, coordY: number) => {
     const carpetChildrenCheck = this.state.carpetChildrenCheck;
     const checkAvailabilty = (coordX: number, coordY: number) => {
@@ -183,6 +189,7 @@ export default class HymnCarpet extends React.Component<
       this.props.children,
       (c, index) => {
         return React.cloneElement(c as React.ReactElement, {
+          changeCurrentCoords: this.changeCurrentCoord,
           coordX: 0,
           coordY: index,
           currentActive: this.state.currentCoord,
