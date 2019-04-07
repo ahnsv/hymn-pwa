@@ -33,7 +33,23 @@ export default class CarpetItem extends React.Component<CarpetItemProps, {}>{
   });
   handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const handleSwipe = this.props.changeCurrentCoords!
-    handleSwipe(e.currentTarget.className.split('arrow ')[1])
+    const dir = e.currentTarget.className.split('arrow ')[1]
+    switch (dir) {
+      case "down":
+        handleSwipe("up")
+        break;
+      case "up":
+        handleSwipe("down")
+        break;
+      case "left":
+        handleSwipe("right")
+        break;
+      case "right":
+        handleSwipe("left")
+        break;
+      default:
+        break;
+    }
   }
   arrowByDirection = (dir: string, key: number) => {
     switch (dir) {
