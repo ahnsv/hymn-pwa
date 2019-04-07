@@ -89,7 +89,7 @@ export default class HymnCarpet extends React.Component<
     children
       .filter(c => c.type.name === "HymnCarpetRow")
       .forEach(v => {
-        const r = v.props.children.length;
+        const r = v.length;
         if (maxX < r) maxX = r;
       });
     return [maxX, children.length];
